@@ -17,11 +17,6 @@ type CitrixADC struct {
 	client *netscaler.NitroClient
 }
 
-func (adc *CitrixADC) CheckExpiry() (int, error) {
-	// TODO
-	return -1, nil
-}
-
 func (adc *CitrixADC) Init() error {
 	// Validate Connection Details
 	client, err := netscaler.NewNitroClientFromParams(netscaler.NitroParams{
