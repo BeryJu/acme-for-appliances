@@ -68,11 +68,15 @@ func initConfig() {
 	if cfgFile != "" {
 		// Use config file from the flag.
 		viper.SetConfigFile(cfgFile)
+	} else {
+		viper.SetConfigFile("config.toml")
 	}
+
 	viper.SetDefault("storage", "storage")
 	viper.SetDefault("acme.directory_url", "https://acme-staging-v02.api.letsencrypt.org/directory")
 	viper.SetDefault("acme.refresh_threshold", 15)
 
+	viper.SetEnvPrefix("a4a")
 	viper.AutomaticEnv() // read in environment variables that match
 
 	// If a config file is found, read it in.

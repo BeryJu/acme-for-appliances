@@ -1,8 +1,35 @@
-# todo
+# ACME-for-appliances
 
-- vcenter support
+ACME for appliances that don't natively support it
 
-# Config
+## Currently supported
+
+- Netapp Ontap (tested with 9.8)
+- Citrix ADC/Netscaler (tested with 13.0)
+
+## Running
+
+```
+Use ACME Certificates for appliances which don't natively support them.
+
+Usage:
+  acme-for-appliances [flags]
+
+Flags:
+  -n, --check-interval int   Interval for infinite mode, in hours (default 24)
+  -c, --config string        config file
+  -f, --force                force renewal
+  -h, --help                 help for acme-for-appliances
+  -i, --infinite             Infinite mode, keep running the program infinitley and check every interval.
+```
+
+## Config
+
+Configuration is loaded from `config.toml` if the file exists. You can also set settings using environment variables:
+
+`A4A_ACME_USER_EMAIL=foo@bar.baz`
+
+This is the default config:
 
 ```toml
 # Path where private keys are stored, relative to the executable
