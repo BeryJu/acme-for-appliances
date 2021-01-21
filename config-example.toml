@@ -2,6 +2,7 @@
 directory_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
 user_email = "your@email.tld"
 refresh_threshold = 15
+resolvers = ["8.8.8.8:53"]
 # See https://go-acme.github.io/lego/dns/
 challenge_provider_name = "route53"
 

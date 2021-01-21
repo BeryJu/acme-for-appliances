@@ -43,6 +43,8 @@ user_email = "jens@beryju.org"
 # Renewal threshold, certificates with this expiry or less will be replaced
 # Default: 15 days
 # refresh_threshold = 15
+# Resolver used for DNS Challenges, defaults to system nameservers
+# resolvers = []
 # Need to agree to the terms of service
 terms_agreed = false
 # All providers from "lego" are supported, see https://go-acme.github.io/lego/dns/

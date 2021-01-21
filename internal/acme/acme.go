@@ -6,6 +6,7 @@ import (
 	"github.com/BeryJu/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certcrypto"
 	"github.com/go-acme/lego/v4/certificate"
+	"github.com/go-acme/lego/v4/challenge/dns01"
 	"github.com/go-acme/lego/v4/lego"
 	llog "github.com/go-acme/lego/v4/log"
 	"github.com/go-acme/lego/v4/providers/dns"
@@ -47,7 +48,10 @@ func (c *Client) GetCerts(app appliances.CertificateConsumer) (*certificate.Reso
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = c.Challenge.SetDNS01Provider(provider)
+
+	resolvers := viper.GetStringSlice("acme.resolvers")
+
+	err = c.Challenge.SetDNS01Provider(provider, dns01.AddRecursiveNameservers(resolvers))
 	if err != nil {
 		log.Fatal(err)
 	}
