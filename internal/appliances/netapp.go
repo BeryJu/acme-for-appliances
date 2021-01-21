@@ -13,8 +13,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-const OnTapConfigCertName = "cert_name"
-const OnTapConfigSVMName = "svm_name"
+const NetappConfigCertName = "cert_name"
+const NetappConfigSVMName = "svm_name"
+
+// NetappDateLayout Parse time from response
+// example: "2021-04-20T15:59:37+00:00"
+const NetappDateLayout = "2006-01-02T15:04:05Z07:00"
 
 type NetappAppliance struct {
 	Appliance
@@ -63,23 +67,19 @@ func (na *NetappAppliance) Init() error {
 	if err != nil {
 		return err
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return errors.Wrap(err, "failed to read response body")
-	}
 	r := &ontapClusterInfo{}
-	err = json.Unmarshal(responseData, &r)
+	err = json.NewDecoder(resp.Body).Decode(&r)
 	if err != nil {
 		return errors.Wrap(err, "failed parse response")
 	}
 	na.Logger.WithField("version", r.Version.Full).Info("Successfully connected to cluster")
-	return na.ensureKeys(OnTapConfigCertName, OnTapConfigSVMName)
+	return na.ensureKeys(NetappConfigCertName, NetappConfigSVMName)
 }
 
 func (na *NetappAppliance) CheckExpiry() (int, error) {
 	values := url.Values{}
-	values.Add("name", na.Extension[OnTapConfigCertName].(string))
-	values.Add("svm.name", na.Extension[OnTapConfigSVMName].(string))
+	values.Add("name", na.Extension[NetappConfigCertName].(string))
+	values.Add("svm.name", na.Extension[NetappConfigSVMName].(string))
 	values.Add("fields", "name,uuid,expiry_time")
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/api/security/certificates?%s", na.URL, values.Encode()), nil)
 	if err != nil {
@@ -91,12 +91,8 @@ func (na *NetappAppliance) CheckExpiry() (int, error) {
 	if err != nil {
 		return 0, errors.Wrap(err, "failed to send request to rest API")
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return 0, errors.Wrap(err, "failed to read response body")
-	}
 	r := &ontapCertificateResponse{}
-	err = json.Unmarshal(responseData, &r)
+	err = json.NewDecoder(resp.Body).Decode(&r)
 	if err != nil {
 		return 0, errors.Wrap(err, "failed parse response")
 	}
@@ -105,10 +101,7 @@ func (na *NetappAppliance) CheckExpiry() (int, error) {
 	}
 	na.CertUUID = &r.Records[0].UUID
 
-	// Parse time from response
-	// example: "2021-04-20T15:59:37+00:00"
-	layout := "2006-01-02T15:04:05Z07:00"
-	t, err := time.Parse(layout, r.Records[0].ExpiryTime)
+	t, err := time.Parse(NetappDateLayout, r.Records[0].ExpiryTime)
 	if err != nil {
 		return 0, errors.Wrap(err, "Failed to parse expiry time")
 	}
@@ -140,9 +133,9 @@ func (na *NetappAppliance) DeleteOldCert() error {
 func (na *NetappAppliance) Consume(c *certificate.Resource) error {
 	// Create request body
 	r := &ontapCertificatePOST{
-		Name: na.Extension[OnTapConfigCertName].(string),
+		Name: na.Extension[NetappConfigCertName].(string),
 		SVM: ontapSVMSelector{
-			Name: na.Extension[OnTapConfigSVMName].(string),
+			Name: na.Extension[NetappConfigSVMName].(string),
 		},
 		PublicCertificate: MainCertOnly(c),
 		PrivateKey:        string(c.PrivateKey),
