@@ -40,6 +40,10 @@ func (a *Appliance) GetActual() CertificateConsumer {
 		return &CitrixADC{
 			Appliance: *a,
 		}
+	case "vmware_vcenter":
+		return &VMwareVsphere{
+			Appliance: *a,
+		}
 	default:
 		log.Fatalf("Invalid appliance type %s", strings.ToLower(a.Type))
 	}

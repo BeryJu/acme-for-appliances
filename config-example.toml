@@ -54,3 +54,11 @@ password = "admin"
 # path_ssl = "/nsconfig/ssl/"
 # Name of the certificate which is created/updated
 # cert_name = "test-le-cert"
+
+# ----- VMware vSphere Extension of Appliance block
+# [appliances.my-appliance.extension]
+# Root CA of the ACME service you use.
+# vCenter requires this explicity stated.
+# In the case of Let's Encrypt, this is will be https://www.identrust.com/dst-root-ca-x3
+# root_ca = """
+# """

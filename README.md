@@ -6,6 +6,7 @@ ACME for appliances that don't natively support it
 
 - Netapp Ontap (tested with 9.8)
 - Citrix ADC/Netscaler (tested with 13.0)
+- VMware vCenter (tested with 7.0u1)
 
 ## Running
 
