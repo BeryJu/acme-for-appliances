@@ -24,6 +24,7 @@ type CitrixADC struct {
 }
 
 func (adc *CitrixADC) CheckExpiry() (int, error) {
+	// TODO
 	return -1, nil
 }
 

@@ -44,8 +44,9 @@ func (a *Appliance) GetActual() CertificateConsumer {
 			Appliance: *a,
 		}
 	default:
-		return nil
+		log.Fatalf("Invalid appliance type %s", strings.ToLower(a.Type))
 	}
+	return nil
 }
 
 func (a *Appliance) httpClient() *http.Client {
@@ -72,13 +73,14 @@ func (a *Appliance) GetPrivateKey() crypto.PrivateKey {
 		return nil
 	}
 	if !exists {
-		k, err := keys.GenerateKeyAndSave(keyPath)
+		k, err := keys.GenerateKeyAndSaveECDSA(keyPath)
 		if err != nil {
 			a.Logger.WithError(err).Warning("failed to save key")
 		}
+		a.Logger.Info("successfully saved new appliance private key")
 		return k
 	}
-	key, err := keys.Load(keyPath)
+	key, err := keys.LoadECDSA(keyPath)
 	if err != nil {
 		a.Logger.WithError(err).Warning("failed to load key")
 	}

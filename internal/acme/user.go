@@ -32,7 +32,7 @@ func (u *User) GetPrivateKey() crypto.PrivateKey {
 	exists, err := storage.FileExists(fullPath)
 	if !exists {
 		l.Info("Key does not exist, creating a new key")
-		k, err := keys.GenerateKeyAndSave(fullPath)
+		k, err := keys.GenerateKeyAndSaveECDSA(fullPath)
 		if err != nil {
 			l.WithError(err).Warning("failed to save key")
 		}
@@ -41,7 +41,7 @@ func (u *User) GetPrivateKey() crypto.PrivateKey {
 	if err != nil {
 		l.WithError(err).Warning("failed to stat keys")
 	}
-	key, err := keys.Load(fullPath)
+	key, err := keys.LoadECDSA(fullPath)
 	if err != nil {
 		l.WithError(err).Warning("failed to load key")
 	}

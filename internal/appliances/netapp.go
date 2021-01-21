@@ -105,8 +105,8 @@ func (na *NetappAppliance) CheckExpiry() (int, error) {
 	if err != nil {
 		return 0, errors.Wrap(err, "Failed to parse expiry time")
 	}
-	now := time.Now()
-	return t.Day() - now.Day(), nil
+	d := t.Sub(time.Now())
+	return int(d.Hours() / 24), nil
 }
 
 func (na *NetappAppliance) DeleteOldCert() error {
@@ -158,6 +158,8 @@ func (na *NetappAppliance) Consume(c *certificate.Resource) error {
 	url = fmt.Sprintf("%s/api/security/certificates", na.URL)
 	na.Logger.Info("Creating new certificate object")
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
+	req.Header.Add("Accept", "application/json")
+	req.Header.Add("Content-Type", "application/json")
 	if err != nil {
 		return errors.Wrap(err, "failed to create post request")
 	}
