@@ -1,0 +1,61 @@
+package acme
+
+import (
+	log "github.com/sirupsen/logrus"
+
+	"github.com/BeryJu/acme-for-appliances/internal/appliances"
+	"github.com/go-acme/lego/v4/certcrypto"
+	"github.com/go-acme/lego/v4/certificate"
+	"github.com/go-acme/lego/v4/lego"
+	llog "github.com/go-acme/lego/v4/log"
+	"github.com/go-acme/lego/v4/providers/dns"
+	"github.com/go-acme/lego/v4/registration"
+	"github.com/spf13/viper"
+)
+
+type Client struct {
+	*lego.Client
+}
+
+func NewClient(u *User) *Client {
+	llog.Logger = log.WithField("component", "acme")
+	config := lego.NewConfig(u)
+	config.CADirURL = viper.GetString("acme.directory_url")
+	config.Certificate.KeyType = certcrypto.RSA2048
+
+	client, err := lego.NewClient(config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// New users will need to register
+	reg, err := client.Registration.Register(registration.RegisterOptions{
+		TermsOfServiceAgreed: viper.GetBool("acme.terms_agreed"),
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	u.Registration = reg
+
+	return &Client{
+		client,
+	}
+}
+
+func (c *Client) GetCerts(app *appliances.Appliance) (*certificate.Resource, error) {
+	provider, err := dns.NewDNSChallengeProviderByName(viper.GetString("acme.challenge_provider_name"))
+	if err != nil {
+		log.Fatal(err)
+	}
+	err = c.Challenge.SetDNS01Provider(provider)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	request := certificate.ObtainRequest{
+		Domains:    app.Domains,
+		Bundle:     false,
+		PrivateKey: app.GetPrivateKey(),
+	}
+	return c.Certificate.Obtain(request)
+}
