@@ -7,11 +7,47 @@ import (
 	"crypto/rand"
 	"crypto/x509"
 	"encoding/pem"
+	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
 
+	"github.com/BeryJu/acme-for-appliances/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
+
+type ECDSAKeyGenerator struct {
+	log *log.Entry
+}
+
+func NewECDSAKeyGenerator() *ECDSAKeyGenerator {
+	return &ECDSAKeyGenerator{
+		log: log.WithField("component", "ecdsa-generator"),
+	}
+}
+
+func (e *ECDSAKeyGenerator) GetPrivateKey(name string) crypto.PrivateKey {
+	keyPath := path.Join(storage.PathPrefix(), fmt.Sprintf("%s.pem", name))
+	exists, err := storage.FileExists(keyPath)
+	if err != nil {
+		e.log.WithError(err).Warning("failed to read key")
+		return nil
+	}
+	if !exists {
+		k, err := GenerateKeyAndSaveECDSA(keyPath)
+		if err != nil {
+			e.log.WithError(err).Warning("failed to save key")
+		}
+		e.log.Info("successfully saved new appliance private key")
+		return k
+	}
+	key, err := LoadECDSA(keyPath)
+	if err != nil {
+		e.log.WithError(err).Warning("failed to load key")
+	}
+	e.log.Info("successfully loaded appliance private key")
+	return key
+}
 
 func GenerateECDSAKey() *ecdsa.PrivateKey {
 	privateKey, err := ecdsa.GenerateKey(elliptic.P256(), rand.Reader)

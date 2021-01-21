@@ -44,7 +44,7 @@ func Main(force bool) {
 		}
 		al.Infof("Cert expires in %d days", expiry)
 		al.Info("Starting cert renewal")
-		certs, err := c.GetCerts(&app)
+		certs, err := c.GetCerts(appHandler)
 		if err != nil {
 			al.WithError(err).Warning("Failed to get certs for appliance")
 		}

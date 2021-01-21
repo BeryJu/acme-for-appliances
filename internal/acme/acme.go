@@ -42,7 +42,7 @@ func NewClient(u *User) *Client {
 	}
 }
 
-func (c *Client) GetCerts(app *appliances.Appliance) (*certificate.Resource, error) {
+func (c *Client) GetCerts(app appliances.CertificateConsumer) (*certificate.Resource, error) {
 	provider, err := dns.NewDNSChallengeProviderByName(viper.GetString("acme.challenge_provider_name"))
 	if err != nil {
 		log.Fatal(err)
@@ -52,10 +52,11 @@ func (c *Client) GetCerts(app *appliances.Appliance) (*certificate.Resource, err
 		log.Fatal(err)
 	}
 
+	pk := app.GetKeyGenerator().GetPrivateKey(app.GetName())
 	request := certificate.ObtainRequest{
-		Domains:    app.Domains,
+		Domains:    app.GetDomains(),
 		Bundle:     false,
-		PrivateKey: app.GetPrivateKey(),
+		PrivateKey: pk,
 	}
 	return c.Certificate.Obtain(request)
 }

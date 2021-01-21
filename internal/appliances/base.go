@@ -1,15 +1,12 @@
 package appliances
 
 import (
-	"crypto"
 	"crypto/tls"
 	"fmt"
 	"net/http"
-	"path"
 	"strings"
 
 	"github.com/BeryJu/acme-for-appliances/internal/keys"
-	"github.com/BeryJu/acme-for-appliances/internal/storage"
 	"github.com/go-acme/lego/v4/certificate"
 	log "github.com/sirupsen/logrus"
 )
@@ -65,31 +62,23 @@ func (a *Appliance) ensureKeys(keys ...string) error {
 	return nil
 }
 
-func (a *Appliance) GetPrivateKey() crypto.PrivateKey {
-	keyPath := path.Join(storage.PathPrefix(), fmt.Sprintf("%s.pem", a.Name))
-	exists, err := storage.FileExists(keyPath)
-	if err != nil {
-		a.Logger.WithError(err).Warning("failed to read key")
-		return nil
-	}
-	if !exists {
-		k, err := keys.GenerateKeyAndSaveECDSA(keyPath)
-		if err != nil {
-			a.Logger.WithError(err).Warning("failed to save key")
-		}
-		a.Logger.Info("successfully saved new appliance private key")
-		return k
-	}
-	key, err := keys.LoadECDSA(keyPath)
-	if err != nil {
-		a.Logger.WithError(err).Warning("failed to load key")
-	}
-	a.Logger.Info("successfully loaded appliance private key")
-	return key
+func (a *Appliance) GetName() string {
+	return a.Name
+}
+
+func (a *Appliance) GetDomains() []string {
+	return a.Domains
+}
+
+func (a *Appliance) GetKeyGenerator() keys.KeyGenerator {
+	return keys.NewECDSAKeyGenerator()
 }
 
 type CertificateConsumer interface {
 	Init() error
 	CheckExpiry() (int, error)
 	Consume(*certificate.Resource) error
+	GetName() string
+	GetDomains() []string
+	GetKeyGenerator() keys.KeyGenerator
 }

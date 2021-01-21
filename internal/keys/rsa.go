@@ -6,11 +6,47 @@ import (
 	"crypto/rsa"
 	"crypto/x509"
 	"encoding/pem"
+	"fmt"
 	"io/ioutil"
 	"os"
+	"path"
 
+	"github.com/BeryJu/acme-for-appliances/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
+
+type RSAKeyGenerator struct {
+	log *log.Entry
+}
+
+func NewRSAKeyGenerator() *RSAKeyGenerator {
+	return &RSAKeyGenerator{
+		log: log.WithField("component", "rsa-generator"),
+	}
+}
+
+func (e *RSAKeyGenerator) GetPrivateKey(name string) crypto.PrivateKey {
+	keyPath := path.Join(storage.PathPrefix(), fmt.Sprintf("%s.pem", name))
+	exists, err := storage.FileExists(keyPath)
+	if err != nil {
+		e.log.WithError(err).Warning("failed to read key")
+		return nil
+	}
+	if !exists {
+		k, err := GenerateKeyAndSaveRSA(keyPath)
+		if err != nil {
+			e.log.WithError(err).Warning("failed to save key")
+		}
+		e.log.Info("successfully saved new appliance private key")
+		return k
+	}
+	key, err := LoadRSA(keyPath)
+	if err != nil {
+		e.log.WithError(err).Warning("failed to load key")
+	}
+	e.log.Info("successfully loaded appliance private key")
+	return key
+}
 
 func GenerateRSAKey() *rsa.PrivateKey {
 	privateKey, err := rsa.GenerateKey(rand.Reader, 2048)
