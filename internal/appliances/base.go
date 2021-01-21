@@ -4,7 +4,6 @@ import (
 	"crypto/tls"
 	"fmt"
 	"net/http"
-	"strings"
 
 	"github.com/BeryJu/acme-for-appliances/internal/keys"
 	"github.com/go-acme/lego/v4/certificate"
@@ -30,34 +29,14 @@ func NewAppliance() *Appliance {
 	}
 }
 
-func (a *Appliance) GetActual() CertificateConsumer {
-	switch strings.ToLower(a.Type) {
-	case "netapp":
-		return &NetappAppliance{
-			Appliance: *a,
-		}
-	case "citrix_adc":
-		return &CitrixADC{
-			Appliance: *a,
-		}
-	case "vmware_vcenter":
-		return &VMwareVsphere{
-			Appliance: *a,
-		}
-	default:
-		log.Fatalf("Invalid appliance type %s", strings.ToLower(a.Type))
-	}
-	return nil
-}
-
-func (a *Appliance) httpClient() *http.Client {
+func (a *Appliance) HTTPClient() *http.Client {
 	tr := &http.Transport{
 		TLSClientConfig: &tls.Config{InsecureSkipVerify: !a.ValidateCerts},
 	}
 	return &http.Client{Transport: tr}
 }
 
-func (a *Appliance) ensureKeys(keys ...string) error {
+func (a *Appliance) EnsureKeys(keys ...string) error {
 	for _, key := range keys {
 		if _, ok := a.Extension[key]; !ok {
 			return fmt.Errorf("no value for setting %s set", key)

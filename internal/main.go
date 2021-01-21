@@ -23,7 +23,7 @@ func Main(force bool) {
 		app.Name = appName
 		al := l.WithField("appliance", appName).WithField("type", app.Type)
 		app.Logger = al
-		appHandler := app.GetActual()
+		appHandler := GetActual(&app)
 		// Init handler, check connection, check validity of settings
 		err := appHandler.Init()
 		if err != nil {
