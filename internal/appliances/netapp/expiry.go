@@ -30,6 +30,10 @@ func (na *NetappAppliance) CheckExpiry() (int, error) {
 	if err != nil {
 		return 0, errors.Wrap(err, "failed parse response")
 	}
+	if r.NumRecords < 1 {
+		// Cert doesn't exist, don't return any error
+		return -1, nil
+	}
 	if r.NumRecords > 1 {
 		return 0, fmt.Errorf("expected to get 1 certificate, but got %d", r.NumRecords)
 	}
