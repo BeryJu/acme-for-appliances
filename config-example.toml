@@ -5,7 +5,7 @@
 # ACME Directory URL
 # directory_url = "https://acme-staging-v02.api.letsencrypt.org/directory"
 # Email for your user account, which will receive renewal notices
-user_email = "jens@beryju.org"
+user_email = "foo@bar.baz"
 # Renewal threshold, certificates with this expiry or less will be replaced
 # Default: 15 days
 # refresh_threshold = 15
@@ -58,7 +58,7 @@ password = "admin"
 # ----- VMware vSphere Extension of Appliance block
 # [appliances.my-appliance.extension]
 # Root CA of the ACME service you use.
-# vCenter requires this explicity stated.
+# vCenter requires this explicitly stated.
 # In the case of Let's Encrypt, this is will be https://www.identrust.com/dst-root-ca-x3
 # root_ca = """
 # """

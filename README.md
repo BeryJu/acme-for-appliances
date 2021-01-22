@@ -8,6 +8,8 @@ ACME for appliances that don't natively support it
 - Citrix ADC/Netscaler (tested with 13.0)
 - VMware vCenter (tested with 7.0u1)
 
+Supported DNS Providers: https://go-acme.github.io/lego/dns/
+
 ## Running
 
 ```
