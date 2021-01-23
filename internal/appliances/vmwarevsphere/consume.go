@@ -24,7 +24,6 @@ func (v *VMwareVsphere) Consume(c *certificate.Resource) error {
 	if err != nil {
 		return errors.Wrap(err, "failed to parse request to json")
 	}
-	v.Logger.Debug(string(jsonValue))
 	fullURL := fmt.Sprintf("%s/rest/vcenter/certificate-management/vcenter/tls", v.URL)
 	req, err := http.NewRequest("PUT", fullURL, bytes.NewBuffer(jsonValue))
 	req.Header.Add(VMwareVsphereSessionHeader, v.sessionID)
