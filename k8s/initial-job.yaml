@@ -1,0 +1,38 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: acme-for-appliances-initial
+spec:
+  selector:
+    matchLabels:
+      job-name: acme-for-appliances-initial
+  template:
+    metadata:
+      labels:
+        job-name: acme-for-appliances-initial
+    spec:
+      containers:
+      - args:
+        - -c
+        - /config/config.toml
+        - --force
+        command:
+        - /acme-for-appliances
+        envFrom:
+        - secretRef:
+            name: acme-for-appliances-dns-settings
+        image: beryju/acme-for-appliances
+        imagePullPolicy: Always
+        name: acme-for-appliances
+        volumeMounts:
+        - mountPath: /config
+          name: acme-for-appliances-config
+        - mountPath: /storage/
+          name: acme-for-appliances-keys
+      volumes:
+      - configMap:
+          name: acme-for-appliances-config
+        name: acme-for-appliances-config
+      - name: acme-for-appliances-keys
+        persistentVolumeClaim:
+          claimName: acme-for-appliances-keys
