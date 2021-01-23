@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"strings"
 
 	"github.com/BeryJu/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certificate"
@@ -32,16 +33,31 @@ func (v *VMwareVsphere) Consume(c *certificate.Resource) error {
 	if err != nil {
 		return err
 	}
+	// During any of these operations a read reset/timeout might occur
+	// Since vCenter instantly restarts the service as soon as the PUT is through.
+	//
 	resp, err := v.client.Do(req)
 	if err != nil {
-		return err
+		return vcenterErrorHandler(err)
 	}
 	responseData, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return errors.Wrap(err, "failed to read response body")
+		return vcenterErrorHandler(errors.Wrap(err, "failed to read response body"))
 	}
 	if resp.StatusCode != 200 {
-		return fmt.Errorf("failed to create certificate: %s", responseData)
+		return vcenterErrorHandler(fmt.Errorf("failed to create certificate: %s", responseData))
 	}
 	return nil
+}
+
+// vcenterErrorHandler Check if an error is caused by connection reset/timeout and ignore it.
+// Otherwise the error is returned as is.
+func vcenterErrorHandler(err error) error {
+	if strings.Contains(err.Error(), "reset by peer") {
+		return nil
+	}
+	if strings.Contains(err.Error(), "i/o timeout") {
+		return nil
+	}
+	return err
 }
