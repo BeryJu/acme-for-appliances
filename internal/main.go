@@ -52,5 +52,6 @@ func Main(force bool) {
 		if err != nil {
 			al.WithError(err).Warning("Appliance failed to consume certificates")
 		}
+		al.Info("appliance successfully consumed certificate")
 	}
 }

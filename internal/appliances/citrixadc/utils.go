@@ -18,9 +18,6 @@ func (adc *CitrixADC) CreateOrUpdateFile(f system.Systemfile) error {
 			"filelocation": url.PathEscape(adc.Extension[ADCConfigPathSSL].(string)),
 		},
 	})
-	if err != nil {
-		return err
-	}
 	if len(mf) > 0 {
 		adc.Logger.WithField("filename", f.Filename).Debug("cert exists, deleting it")
 		err := adc.client.DeleteResourceWithArgsMap(netscaler.Systemfile.Type(), f.Filename, map[string]string{

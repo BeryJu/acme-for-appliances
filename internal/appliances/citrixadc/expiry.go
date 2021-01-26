@@ -9,7 +9,7 @@ import (
 func (adc *CitrixADC) CheckExpiry() (int, error) {
 	certs, err := adc.client.FindResourceArray(netscaler.Sslcertkey.Type(), adc.Extension[ADCConfigCertName].(string))
 	if err != nil {
-		return -1, err
+		return -1, nil
 	}
 	if len(certs) < 1 {
 		// No cert found, return -1 without error
