@@ -6,7 +6,7 @@ ACME for appliances that don't natively support it
 
 - Netapp ONTAP (tested with 9.8)
 
-  The certificate can be changed for either the entire Cluster's Management interface (set the extension `svm_name` to the cluster name), or a SVN's S3 service. Since the S3 update is disruptive, the SVM will be set to down, the cert is replaced and the SVM is started again. In the case of an error, the SVM is started regardless.
+  The certificate can be changed for either the entire Cluster's Management interface (set the extension `svm_name` to the cluster name), or a SVM's S3 service. Since the S3 update is disruptive, the SVM will be set to down, the cert is replaced and the SVM is started again. In the case of an error, the SVM is started regardless.
 
 - Citrix ADC/Netscaler (tested with 13.0)
 
