@@ -1,10 +1,8 @@
 package netapp
 
 import (
-	"bytes"
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"time"
 
 	"github.com/pkg/errors"
 )
@@ -16,21 +14,13 @@ func (na *NetappAppliance) SwitchClusterCert(uuid string) error {
 			UUID: uuid,
 		},
 	}
-	jsonValue, err := json.Marshal(r)
-	if err != nil {
-		return errors.Wrap(err, "failed to parse request to json")
-	}
 
-	resp, err := na.req("PATCH", "/api/cluster", bytes.NewBuffer(jsonValue))
+	resp, err := na.req("PATCH", "/api/cluster", r)
 	if err != nil {
 		return errors.Wrap(err, "failed to send request to rest API")
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return errors.Wrap(err, "failed to read response body")
-	}
 	if resp.StatusCode != 202 {
-		return fmt.Errorf("failed to update cluster certificate: %s", responseData)
+		return fmt.Errorf("failed to update cluster certificate")
 	}
 	return nil
 }
@@ -41,26 +31,36 @@ func (na *NetappAppliance) SwitchSVMS3Cert(uuid string) error {
 		return errors.New("failed to update s3 certificate because we don't have a SVM UUID")
 	}
 
-	r := &ontapCertificateUpdate{
+	err := na.patchProtocolsS3(ontapSVMServiceUpdate{
+		Enabled: false,
+	})
+	if err != nil {
+		na.Logger.WithError(err).Warning("failed to disable S3")
+		return err
+	}
+	na.Logger.Info("successfully disabled S3, waiting")
+
+	time.Sleep(time.Second * 5)
+
+	err = na.patchProtocolsS3(ontapCertificateUpdate{
 		Certificate: ontapRecord{
 			UUID: uuid,
 		},
-	}
-	jsonValue, err := json.Marshal(r)
+	})
 	if err != nil {
-		return errors.Wrap(err, "failed to parse request to json")
+		na.Logger.WithError(err).Warning("failed to update cert")
+		// Don't return here, we still need to enable S3
+	} else {
+		na.Logger.Info("successfully replaced certificate")
 	}
 
-	resp, err := na.req("PATCH", fmt.Sprintf("/api/protocols/s3/services/%s", *na.SVMUUID), bytes.NewBuffer(jsonValue))
-	if err != nil {
-		return errors.Wrap(err, "failed to send request to rest API")
+	time.Sleep(time.Second * 5)
+
+	err = na.patchProtocolsS3(ontapSVMServiceUpdate{
+		Enabled: true,
+	})
+	if err == nil {
+		na.Logger.Info("successfully re-enabled s3")
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return errors.Wrap(err, "failed to read response body")
-	}
-	if resp.StatusCode != 201 {
-		return fmt.Errorf("failed to update SVM S3 certificate: %s", responseData)
-	}
-	return nil
+	return err
 }

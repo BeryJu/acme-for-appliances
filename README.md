@@ -6,16 +6,16 @@ ACME for appliances that don't natively support it
 
 - Netapp ONTAP (tested with 9.8)
 
-  Notes: Currently, the certificate is deleted and re-created. This will fail when the certificate is in use by HTTPS services. The API does not expose where the Certificate is used. I'm currently re-writing the Netapp integration to create certificates with a counter, then modify common HTTPS settings to use the new certificate and attempt to delete the old one.
+  The certificate can be changed for either the entire Cluster's Management interface (set the extension `svm_name` to the cluster name), or a SVN's S3 service. Since the S3 update is disruptive, the SVM will be set to down, the cert is replaced and the SVM is started again. In the case of an error, the SVM is started regardless.
 
 - Citrix ADC/Netscaler (tested with 13.0)
 
-  Notes: Works pretty much as expected, certificates are updated without any manual actions or workaround required.
+  Works pretty much as expected, certificates are updated without any manual actions or workaround required.
   Depending on the Virtual Server setup, you might have to import the Root CA manually, which for Let's Encrypt will be https://www.identrust.com/dst-root-ca-x3.
 
 - VMware vCenter (tested with 7.0u1)
 
-  Notes: After the initial replacement, you might have to accept the new certificate in software that connects to the vCenter, like Veeam.
+  After the initial replacement, you might have to accept the new certificate in software that connects to the vCenter, like Veeam.
 
 Supported DNS Providers: https://go-acme.github.io/lego/dns/
 

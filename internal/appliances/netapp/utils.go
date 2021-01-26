@@ -1,6 +1,7 @@
 package netapp
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -55,22 +56,58 @@ func (na *NetappAppliance) DeleteCert(uuid string) error {
 	return nil
 }
 
-func (na *NetappAppliance) req(method string, path string, body io.Reader) (*http.Response, error) {
-	// To ensure the credential work, we check /cluster
+func (na *NetappAppliance) patchProtocolsS3(u interface{}) error {
+	// Because we need the SVM UUID to update the certificate, check first
+	if na.SVMUUID == nil {
+		return errors.New("failed to update s3 certificate because we don't have a SVM UUID")
+	}
+
+	resp, err := na.req("PATCH", fmt.Sprintf("/api/protocols/s3/services/%s", *na.SVMUUID), u)
+	if err != nil {
+		return errors.Wrap(err, "failed to send request to rest API")
+	}
+	responseData, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return errors.Wrap(err, "failed to read response body")
+	}
+	if resp.StatusCode != 200 {
+		return fmt.Errorf("failed to update SVM S3 certificate: %s", responseData)
+	}
+	return nil
+}
+
+func (na *NetappAppliance) req(method string, path string, body interface{}) (*http.Response, error) {
 	url := fmt.Sprintf("%s%s", na.URL, path)
 	na.Logger.Tracef("%s '%s'", method, url)
-	req, err := http.NewRequest(method, url, body)
+
+	var bodyReader io.Reader
+	if body != nil {
+		jsonValue, err := json.Marshal(body)
+		if err != nil {
+			return nil, errors.Wrap(err, "failed to parse request to json")
+		}
+		bodyReader = bytes.NewBuffer(jsonValue)
+	}
+
+	req, err := http.NewRequest(method, url, bodyReader)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create get request")
 	}
 	req.SetBasicAuth(na.Username, na.Password)
-	if method == "POST" || method == "PATCH" {
-		req.Header.Add("Accept", "application/json")
+	req.Header.Add("Accept", "application/json")
+	if body != nil {
 		req.Header.Add("Content-Type", "application/json")
 	}
 	resp, err := na.client.Do(req)
 	if err != nil {
 		return nil, err
+	}
+	if resp.StatusCode >= 400 {
+		responseData, err := ioutil.ReadAll(resp.Body)
+		na.Logger.Trace(string(responseData))
+		if err != nil {
+			return resp, errors.Wrap(err, "failed to read response body")
+		}
 	}
 	return resp, nil
 }

@@ -13,6 +13,10 @@ type ontapClusterInfo struct {
 	} `json:"version"`
 }
 
+type ontapSVMServiceUpdate struct {
+	Enabled bool `json:"enabled"`
+}
+
 type ontapCertificateUpdate struct {
 	Certificate ontapRecord `json:"certificate"`
 }

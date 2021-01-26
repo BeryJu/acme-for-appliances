@@ -1,9 +1,9 @@
 package netapp
 
 import (
-	"bytes"
 	"encoding/json"
 	"fmt"
+	"time"
 
 	"github.com/BeryJu/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certificate"
@@ -52,6 +52,10 @@ func (na *NetappAppliance) Consume(c *certificate.Resource) error {
 	na.ActiveCertName = b
 	na.PassiveCertName = a
 
+	// Sleep a second, if we send too many requests without pause
+	// we get a connection reset
+	time.Sleep(time.Second * 1)
+
 	// Now we've successfully swapped the certificates.
 	// Let's the delete the (now passive) certificate
 
@@ -82,13 +86,9 @@ func (na *NetappAppliance) CreateCert(c *certificate.Resource) (*ontapRecord, er
 		PrivateKey:        string(c.PrivateKey),
 		Type:              "server",
 	}
-	jsonValue, err := json.Marshal(r)
-	if err != nil {
-		return nil, errors.Wrap(err, "failed to parse request to json")
-	}
 
 	na.Logger.Info("Creating new certificate object")
-	resp, err := na.req("POST", "/api/security/certificates?return_records=true", bytes.NewBuffer(jsonValue))
+	resp, err := na.req("POST", "/api/security/certificates?return_records=true", r)
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to send request to rest API")
 	}

@@ -13,12 +13,12 @@ func (na *NetappAppliance) CheckExpiry() (int, error) {
 	// First off, we need to figure out which certificate is currently active.
 	var activeCertUUID *string
 	if na.certIsForCluster {
+		na.Logger.Debug("Getting certificate UUID for cluster")
 		activeCertUUID = na.GetClusterCertificate()
-		na.Logger.Debug("Got certificate UUID for cluster")
 	} else {
 		// if cert is not for cluster, I assume it's used for SVM S3
+		na.Logger.Debug("Getting certificate UUID for S3")
 		activeCertUUID = na.GetS3Certificate()
-		na.Logger.Debug("Got certificate UUID for S3")
 	}
 	if activeCertUUID == nil {
 		na.Logger.Warning("Failed to get UUID for certificate")
@@ -72,14 +72,17 @@ func (na *NetappAppliance) GetS3Certificate() *string {
 	values.Add("fields", "certificate.uuid,svm.uuid")
 	resp, err := na.req("GET", fmt.Sprintf("/api/protocols/s3/services?%s", values.Encode()), nil)
 	if err != nil {
+		na.Logger.WithError(err).Warning("failed to get s3 info")
 		return nil
 	}
 	r := &ontapSVMS3Info{}
 	err = json.NewDecoder(resp.Body).Decode(&r)
 	if err != nil {
+		na.Logger.WithError(err).Warning("failed to decode s3 info")
 		return nil
 	}
 	if len(r.Records) < 1 {
+		na.Logger.WithError(err).Warning("no matching svm found")
 		return nil
 	}
 	na.SVMUUID = &r.Records[0].SVM.UUID
