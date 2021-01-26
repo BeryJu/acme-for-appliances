@@ -50,8 +50,13 @@ func (c *Client) GetCerts(app appliances.CertificateConsumer) (*certificate.Reso
 	}
 
 	resolvers := viper.GetStringSlice("acme.resolvers")
+	opts := make([]dns01.ChallengeOption, 0)
 
-	err = c.Challenge.SetDNS01Provider(provider, dns01.AddRecursiveNameservers(resolvers))
+	if len(resolvers) > 1 {
+		opts = append(opts, dns01.AddRecursiveNameservers(resolvers))
+	}
+
+	err = c.Challenge.SetDNS01Provider(provider, opts...)
 	if err != nil {
 		log.Fatal(err)
 	}
