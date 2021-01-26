@@ -10,6 +10,8 @@ ACME for appliances that don't natively support it
 
 - Citrix ADC/Netscaler (tested with 13.0)
 
+  Notes: Works pretty much as expected, certificates are updated without any manual actions or workaround required.
+  Depending on the Virtual Server setup, you might have to import the Root CA manually, which for Let's Encrypt will be https://www.identrust.com/dst-root-ca-x3.
 
 - VMware vCenter (tested with 7.0u1)
 

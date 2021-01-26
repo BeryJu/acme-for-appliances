@@ -36,9 +36,10 @@ func (adc *CitrixADC) Consume(c *certificate.Resource) error {
 	}
 
 	certKey := ssl.Sslcertkey{
-		Certkey: adc.Extension[ADCConfigCertName].(string),
-		Cert:    fmt.Sprintf("%s%s", adc.Extension[ADCConfigPathSSL].(string), adc.Extension[ADCConfigFilenameCert].(string)),
-		Key:     fmt.Sprintf("%s%s", adc.Extension[ADCConfigPathSSL].(string), adc.Extension[ADCConfigFilenameKey].(string)),
+		Certkey:       adc.Extension[ADCConfigCertName].(string),
+		Cert:          fmt.Sprintf("%s%s", adc.Extension[ADCConfigPathSSL].(string), adc.Extension[ADCConfigFilenameCert].(string)),
+		Key:           fmt.Sprintf("%s%s", adc.Extension[ADCConfigPathSSL].(string), adc.Extension[ADCConfigFilenameKey].(string)),
+		Nodomaincheck: true,
 	}
 	err = adc.CreateOrUpdateCert(certKey)
 	if err != nil {
