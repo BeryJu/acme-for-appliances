@@ -19,7 +19,7 @@ challenge_provider_name = "route53"
 
 # ----- Appliance block
 [appliances.my-appliance]
-# Appliance type, currently supported: netapp
+# Appliance type, currently supported: "netapp", "citrix_adc", "vmware_vcenter"
 type = "netapp"
 # Domains that the certificate should have
 domains = [

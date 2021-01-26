@@ -4,9 +4,16 @@ ACME for appliances that don't natively support it
 
 ## Currently supported
 
-- Netapp Ontap (tested with 9.8)
+- Netapp ONTAP (tested with 9.8)
+
+  Notes: Currently, the certificate is deleted and re-created. This will fail when the certificate is in use by HTTPS services. The API does not expose where the Certificate is used. I'm currently re-writing the Netapp integration to create certificates with a counter, then modify common HTTPS settings to use the new certificate and attempt to delete the old one.
+
 - Citrix ADC/Netscaler (tested with 13.0)
+
+
 - VMware vCenter (tested with 7.0u1)
+
+  Notes: After the initial replacement, you might have to accept the new certificate in software that connects to the vCenter, like Veeam.
 
 Supported DNS Providers: https://go-acme.github.io/lego/dns/
 
