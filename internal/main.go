@@ -47,10 +47,12 @@ func Main(force bool) {
 		certs, err := c.GetCerts(appHandler)
 		if err != nil {
 			al.WithError(err).Warning("Failed to get certs for appliance")
+			continue
 		}
 		err = appHandler.Consume(certs)
 		if err != nil {
 			al.WithError(err).Warning("Appliance failed to consume certificates")
+			continue
 		}
 		al.Info("appliance successfully consumed certificate")
 	}

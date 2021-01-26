@@ -6,9 +6,23 @@ type ontapSVMSelector struct {
 }
 
 type ontapClusterInfo struct {
-	Version struct {
+	Name        string      `json:"name"`
+	Certificate ontapRecord `json:"certificate"`
+	Version     struct {
 		Full string `json:"full"`
 	} `json:"version"`
+}
+
+type ontapCertificateUpdate struct {
+	Certificate ontapRecord `json:"certificate"`
+}
+
+type ontapSVMS3Info struct {
+	Records []struct {
+		SVM         ontapSVMSelector `json:"svm"`
+		Certificate ontapRecord      `json:"certificate"`
+	} `json:"records"`
+	NumRecords int `json:"num_records"`
 }
 
 type ontapCertificatePOST struct {
@@ -20,10 +34,13 @@ type ontapCertificatePOST struct {
 	SVM                      ontapSVMSelector `json:"svm"`
 }
 
+type ontapRecord struct {
+	Name       string `json:"name,omitempty"`
+	UUID       string `json:"uuid"`
+	ExpiryTime string `json:"expiry_time,omitempty"`
+}
+
 type ontapCertificateResponse struct {
-	Records []struct {
-		UUID       string `json:"uuid"`
-		ExpiryTime string `json:"expiry_time"`
-	} `json:"records"`
-	NumRecords int `json:"num_records"`
+	Records    []ontapRecord `json:"records"`
+	NumRecords int           `json:"num_records"`
 }

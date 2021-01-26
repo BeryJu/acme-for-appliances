@@ -2,14 +2,14 @@ package netapp
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 
 	"github.com/BeryJu/acme-for-appliances/internal/appliances"
 	"github.com/pkg/errors"
 )
 
-const NetappConfigCertName = "cert_name"
+const NetappConfigCertNameA = "cert_name_a"
+const NetappConfigCertNameB = "cert_name_b"
 const NetappConfigSVMName = "svm_name"
 
 // NetappDateLayout Parse time from response
@@ -18,20 +18,21 @@ const NetappDateLayout = "2006-01-02T15:04:05Z07:00"
 
 type NetappAppliance struct {
 	appliances.Appliance
-	CertUUID *string
-	client   *http.Client
+
+	ActiveCertName  string
+	PassiveCertName string
+
+	SVMUUID *string
+
+	client           *http.Client
+	clusterName      string
+	certIsForCluster bool
 }
 
 func (na *NetappAppliance) Init() error {
 	// Get a client with required TLS Settings (skip cert check)
 	na.client = na.HTTPClient()
-	// To ensure the credential work, we check /cluster
-	req, err := http.NewRequest("GET", fmt.Sprintf("%s/api/cluster", na.URL), nil)
-	if err != nil {
-		return errors.Wrap(err, "failed to create get request")
-	}
-	req.SetBasicAuth(na.Username, na.Password)
-	resp, err := na.client.Do(req)
+	resp, err := na.req("GET", "/api/cluster", nil)
 	if err != nil {
 		return err
 	}
@@ -40,6 +41,13 @@ func (na *NetappAppliance) Init() error {
 	if err != nil {
 		return errors.Wrap(err, "failed parse response")
 	}
-	na.Logger.WithField("version", r.Version.Full).Info("Successfully connected to cluster")
-	return na.EnsureKeys(NetappConfigCertName, NetappConfigSVMName)
+	na.clusterName = r.Name
+	na.Logger.WithField("version", r.Version.Full).WithField("name", r.Name).Info("Successfully connected to cluster")
+	if na.clusterName == na.Extension[NetappConfigSVMName].(string) {
+		na.certIsForCluster = true
+		na.Logger.Info("Cert is for Cluster SVM")
+	} else {
+		na.certIsForCluster = false
+	}
+	return na.EnsureKeys(NetappConfigCertNameA, NetappConfigCertNameB, NetappConfigSVMName)
 }

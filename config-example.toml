@@ -39,8 +39,11 @@ password = "admin"
 
 # ----- NetApp Extension of Appliance block
 # [appliances.my-appliance.extension]
-# Name of the certificate that is created/update
-# cert_name = "test-le-cert"
+# Name of the certificates
+# For a Netapp we need two certificates, as they can't be updated
+# in place.
+# cert_name_a = "test-le-cert-a"
+# cert_name_b = "test-le-cert-b"
 # SVM for which the Certificate is created. Can be set to the cluster name
 # for a cluster certificate
 # svm_name = "cert-test"

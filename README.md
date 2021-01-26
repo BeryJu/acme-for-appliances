@@ -59,6 +59,7 @@ username = "admin"
 password = "admin"
 
 [appliances.my-appliance.extension]
-cert_name = "test-le-cert"
+cert_name_a = "test-le-cert-a"
+cert_name_b = "test-le-cert-b"
 svm_name = "cert-test"
 ```

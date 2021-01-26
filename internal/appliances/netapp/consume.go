@@ -4,8 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"net/http"
 
 	"github.com/BeryJu/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certificate"
@@ -13,9 +11,70 @@ import (
 )
 
 func (na *NetappAppliance) Consume(c *certificate.Resource) error {
+	// First off, we need to check if the passive cert exists
+	// (and attempt to delete it)
+	passiveCert, err := na.getCertificateByName(na.PassiveCertName)
+	if err != nil {
+		// Failed to check certificate, fail early to ensure we don't error later
+		return err
+	}
+	if passiveCert != nil {
+		// Passive cert exists, lets try to delete it
+		err := na.DeleteCert(passiveCert.UUID)
+		if err != nil {
+			// Don't fail if we're not successful
+			na.Logger.WithError(err).Warning("Failed to deleted passive cert")
+		}
+	}
+
+	cert, err := na.CreateCert(c)
+	if err != nil {
+		return err
+	}
+	na.Logger.WithField("certUUID", cert.UUID).Debug("Got UUID for new cert")
+
+	// We've now successfully created the passive cert.
+	// Now we need to switch either cluster or S3 over to the new cert.
+
+	if na.certIsForCluster {
+		err = na.SwitchClusterCert(cert.UUID)
+	} else {
+		err = na.SwitchSVMS3Cert(cert.UUID)
+	}
+
+	if err != nil {
+		na.Logger.WithError(err).Warning("failed to switch cluster/svm certificate")
+		return err
+	}
+
+	a := na.ActiveCertName
+	b := na.PassiveCertName
+	na.ActiveCertName = b
+	na.PassiveCertName = a
+
+	// Now we've successfully swapped the certificates.
+	// Let's the delete the (now passive) certificate
+
+	passiveCert, err = na.getCertificateByName(na.PassiveCertName)
+	if err != nil {
+		na.Logger.WithError(err).Warning("failed to get passive cert")
+		return nil
+	}
+	if passiveCert == nil {
+		na.Logger.Info("couldn't find passive cert")
+		return nil
+	}
+	err = na.DeleteCert(passiveCert.UUID)
+	if err == nil {
+		na.Logger.WithField("passive", passiveCert.Name).Info("Successfully deleted passive cert")
+	}
+	return err
+}
+
+func (na *NetappAppliance) CreateCert(c *certificate.Resource) (*ontapRecord, error) {
 	// Create request body
 	r := &ontapCertificatePOST{
-		Name: na.Extension[NetappConfigCertName].(string),
+		Name: na.PassiveCertName,
 		SVM: ontapSVMSelector{
 			Name: na.Extension[NetappConfigSVMName].(string),
 		},
@@ -25,38 +84,21 @@ func (na *NetappAppliance) Consume(c *certificate.Resource) error {
 	}
 	jsonValue, err := json.Marshal(r)
 	if err != nil {
-		return errors.Wrap(err, "failed to parse request to json")
+		return nil, errors.Wrap(err, "failed to parse request to json")
 	}
 
-	var url string
-	// If we don't have a certificate UUID from above, assume we have to create a new one
-	if na.CertUUID != nil {
-		na.Logger.Info("Deleting old certificate before installing new certificate")
-		err := na.DeleteOldCert()
-		if err != nil {
-			return errors.Wrap(err, "failed to delete old certificate")
-		}
-	}
-	url = fmt.Sprintf("%s/api/security/certificates", na.URL)
 	na.Logger.Info("Creating new certificate object")
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonValue))
-	req.Header.Add("Accept", "application/json")
-	req.Header.Add("Content-Type", "application/json")
+	resp, err := na.req("POST", "/api/security/certificates?return_records=true", bytes.NewBuffer(jsonValue))
 	if err != nil {
-		return errors.Wrap(err, "failed to create post request")
+		return nil, errors.Wrap(err, "failed to send request to rest API")
 	}
-	req.SetBasicAuth(na.Username, na.Password)
-
-	resp, err := na.client.Do(req)
+	rec := &ontapCertificateResponse{}
+	err = json.NewDecoder(resp.Body).Decode(&rec)
 	if err != nil {
-		return errors.Wrap(err, "failed to send request to rest API")
-	}
-	responseData, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		return errors.Wrap(err, "failed to read response body")
+		return nil, errors.Wrap(err, "failed parse response")
 	}
 	if resp.StatusCode != 201 {
-		return fmt.Errorf("failed to create certificate: %s", responseData)
+		return nil, fmt.Errorf("failed to create certificate")
 	}
-	return nil
+	return &rec.Records[0], nil
 }
