@@ -44,7 +44,7 @@ func (e *RSAKeyGenerator) GetPrivateKey(name string) crypto.PrivateKey {
 	if err != nil {
 		e.log.WithError(err).Warning("failed to load key")
 	}
-	e.log.Info("successfully loaded appliance private key")
+	e.log.Debug("successfully loaded appliance private key")
 	return key
 }
 

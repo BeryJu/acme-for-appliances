@@ -38,7 +38,7 @@ func (na *NetappAppliance) SwitchSVMS3Cert(uuid string) error {
 		na.Logger.WithError(err).Warning("failed to disable S3")
 		return err
 	}
-	na.Logger.Info("successfully disabled S3, waiting")
+	na.Logger.Debug("successfully disabled S3, waiting")
 
 	time.Sleep(time.Second * 5)
 
@@ -51,7 +51,7 @@ func (na *NetappAppliance) SwitchSVMS3Cert(uuid string) error {
 		na.Logger.WithError(err).Warning("failed to update cert")
 		// Don't return here, we still need to enable S3
 	} else {
-		na.Logger.Info("successfully replaced certificate")
+		na.Logger.Debug("successfully replaced certificate")
 	}
 
 	time.Sleep(time.Second * 5)
@@ -60,7 +60,7 @@ func (na *NetappAppliance) SwitchSVMS3Cert(uuid string) error {
 		Enabled: true,
 	})
 	if err == nil {
-		na.Logger.Info("successfully re-enabled s3")
+		na.Logger.Debug("successfully re-enabled s3")
 	}
 	return err
 }
