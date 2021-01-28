@@ -75,6 +75,7 @@ func initConfig() {
 	viper.SetDefault("storage", "storage")
 	viper.SetDefault("acme.directory_url", "https://acme-staging-v02.api.letsencrypt.org/directory")
 	viper.SetDefault("acme.refresh_threshold", 15)
+	viper.SetDefault("acme.resolvers", []string{})
 
 	viper.SetEnvPrefix("a4a")
 	viper.AutomaticEnv() // read in environment variables that match

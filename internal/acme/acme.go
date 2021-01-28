@@ -49,10 +49,11 @@ func (c *Client) GetCerts(app appliances.CertificateConsumer) (*certificate.Reso
 		log.Fatal(err)
 	}
 
+	opts := []dns01.ChallengeOption{}
 	resolvers := viper.GetStringSlice("acme.resolvers")
-	opts := make([]dns01.ChallengeOption, 0)
 
-	if len(resolvers) > 1 {
+	if len(resolvers) > 0 {
+		log.WithField("resolvers", resolvers).Debug("Using custom resolvers")
 		opts = append(opts, dns01.AddRecursiveNameservers(resolvers))
 	}
 
