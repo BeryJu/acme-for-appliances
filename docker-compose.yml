@@ -3,12 +3,13 @@ version: '3.7'
 services:
   acme-for-appliances:
     image: beryju/acme-for-appliances
-    environment:
-      # Supply config for your DNS Providers, according to
-      # https://go-acme.github.io/lego/dns/
-      # You can configure the rest of the options here as well,
-      # if you don't want a toml file.
-      # A4A_ACME_USER_EMAIL=foo@bar.baz
+    command: -i
+    # environment:
+    #   # Supply config for your DNS Providers, according to
+    #   # https://go-acme.github.io/lego/dns/
+    #   # You can configure the rest of the options here as well,
+    #   # if you don't want a toml file.
+    #   A4A_ACME_USER_EMAIL=foo@bar.baz
     volumes:
       - ./storage:/storage
       - ./config.toml:/config.toml

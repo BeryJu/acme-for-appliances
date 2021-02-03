@@ -21,19 +21,9 @@ Supported DNS Providers: https://go-acme.github.io/lego/dns/
 
 ## Running
 
-```
-Use ACME Certificates for appliances which don't natively support them.
+You can deploy acme-for-appliances in Kubernetes, where it will run as a CronJob, or with docker-compose. For more info on the Kubernetes deployment, check the k8s folder.
 
-Usage:
-  acme-for-appliances [flags]
-
-Flags:
-  -n, --check-interval int   Interval for infinite mode, in hours (default 24)
-  -c, --config string        config file
-  -f, --force                force renewal
-  -h, --help                 help for acme-for-appliances
-  -i, --infinite             Infinite mode, keep running the program infinitley and check every interval.
-```
+For docker-compose, simply download the docker-compose.yml and the example config file. DNS provider-specific configuration can only be set through environment variables, in the docker-compose file.
 
 ## Config
 
