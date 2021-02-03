@@ -45,7 +45,7 @@ func (na *NetappAppliance) Init() error {
 	na.Logger.WithField("version", r.Version.Full).WithField("name", r.Name).Info("Successfully connected to cluster")
 	if na.clusterName == na.Extension[NetappConfigSVMName].(string) {
 		na.certIsForCluster = true
-		na.Logger.Info("Cert is for Cluster SVM")
+		na.Logger.Debug("Cert is for Cluster SVM")
 	} else {
 		na.certIsForCluster = false
 	}

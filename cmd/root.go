@@ -29,20 +29,20 @@ var rootCmd = &cobra.Command{
 			internal.Main(force)
 			os.Exit(0)
 		}
-		ticker := time.NewTicker(time.Duration(checkInterval) * time.Hour)
+		d := time.Duration(checkInterval) * time.Hour
+		ticker := time.NewTicker(d)
 		quit := make(chan os.Signal)
 		signal.Notify(quit, os.Interrupt)
-		go func() {
-			for {
-				select {
-				case <-ticker.C:
-					internal.Main(force)
-				case <-quit:
-					ticker.Stop()
-					os.Exit(0)
-				}
+		log.Infof("Running, will check in %s", d)
+		for {
+			select {
+			case <-ticker.C:
+				internal.Main(force)
+			case <-quit:
+				ticker.Stop()
+				os.Exit(0)
 			}
-		}()
+		}
 	},
 }
 
