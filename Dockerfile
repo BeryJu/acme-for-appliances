@@ -1,5 +1,5 @@
 # Build application
-FROM golang:1.16.2 AS builder
+FROM golang:1.16.3 AS builder
 
 COPY . /go/src/github.com/BeryJu/acme-for-appliances
 
