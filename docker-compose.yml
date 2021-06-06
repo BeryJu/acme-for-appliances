@@ -2,7 +2,7 @@ version: '3.7'
 
 services:
   acme-for-appliances:
-    image: beryju/acme-for-appliances
+    image: ghcr.io/beryju/acme-for-appliances:latest
     command: -i
     # environment:
     #   # Supply config for your DNS Providers, according to
