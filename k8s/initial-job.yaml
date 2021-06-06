@@ -14,8 +14,6 @@ spec:
       restartPolicy: "Never"
       containers:
       - args:
-        - -c
-        - /config/config.toml
         - --force
         command:
         - /acme-for-appliances

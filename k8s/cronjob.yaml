@@ -23,9 +23,6 @@ spec:
             imagePullPolicy: Always
             command:
               - /acme-for-appliances
-            args:
-              - -c
-              - /config/config.toml
             volumeMounts:
               - mountPath: /config
                 name: acme-for-appliances-config
