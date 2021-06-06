@@ -39,5 +39,5 @@ jobs:
         tags: |
           beryju/acme-for-appliances:latest
           ghcr.io/beryju/acme-for-appliances:latest
-        push: true
+        push: ${{ github.ref == 'refs/heads/master' }}
         platforms: linux/386,linux/amd64,linux/arm/v6,linux/arm/v7,linux/arm64
