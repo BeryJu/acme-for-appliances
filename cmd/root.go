@@ -71,7 +71,6 @@ func initConfig() {
 	} else {
 		viper.SetConfigFile("config.toml")
 	}
-	viper.AddConfigPath("/config")
 
 	viper.SetDefault("storage", "storage")
 	viper.SetDefault("acme.directory_url", "https://acme-staging-v02.api.letsencrypt.org/directory")
