@@ -55,7 +55,7 @@ func Execute() {
 
 func init() {
 	cobra.OnInitialize(initConfig)
-	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "config.toml", "config file")
+	rootCmd.PersistentFlags().StringVarP(&cfgFile, "config", "c", "", "config file")
 	rootCmd.PersistentFlags().BoolVarP(&force, "force", "f", false, "force renewal")
 	rootCmd.PersistentFlags().BoolVarP(&infinite, "infinite", "i", false, "Infinite mode, keep running the program infinitley and check every interval.")
 	rootCmd.PersistentFlags().IntVarP(&checkInterval, "check-interval", "n", 24, "Interval for infinite mode, in hours")
@@ -65,8 +65,12 @@ func init() {
 func initConfig() {
 	log.SetLevel(log.DebugLevel)
 	viper.SetConfigType("toml")
-	viper.SetConfigName("config")
-	viper.SetConfigFile(cfgFile)
+	if cfgFile != "" {
+		// Use config file from the flag.
+		viper.SetConfigFile(cfgFile)
+	} else {
+		viper.SetConfigFile("config.toml")
+	}
 	viper.AddConfigPath("/config")
 
 	viper.SetDefault("storage", "storage")
