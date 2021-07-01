@@ -3,6 +3,7 @@ package internal
 import (
 	"github.com/BeryJu/acme-for-appliances/internal/acme"
 	"github.com/BeryJu/acme-for-appliances/internal/appliances"
+	"github.com/BeryJu/acme-for-appliances/internal/storage"
 	"github.com/mitchellh/mapstructure"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
@@ -38,7 +39,11 @@ func Main(force bool) {
 		if expiry == -1 {
 			al.Info("CheckExpiry() returned -1, assuming cert doesn't exist")
 		}
-		if expiry >= threshold && !force {
+		// Check if domains are the same, otherwise renew
+		s := storage.GetState(appName)
+		if !s.CompareDomains(app.Domains) {
+			al.WithField("expiry", expiry).Info("Domains changed, forcing renewal")
+		} else if expiry >= threshold && !force {
 			al.WithField("threshold", threshold).WithField("expiry", expiry).Info("Cert doesn't need to be renewed")
 			continue
 		}
@@ -55,5 +60,8 @@ func Main(force bool) {
 			continue
 		}
 		al.Info("appliance successfully consumed certificate")
+		// Update state and write it back
+		s.Domains = app.Domains
+		s.Write(appName)
 	}
 }
