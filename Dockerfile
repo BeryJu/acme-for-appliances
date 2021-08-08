@@ -1,12 +1,3 @@
-# Build application
-FROM golang:1.17rc2 AS builder
-
-COPY . /go/src/github.com/BeryJu/acme-for-appliances
-
-RUN cd /go/src/github.com/BeryJu/acme-for-appliances && \
-    go build -v -o /go/bin/acme-for-appliances
-
-# Final container
 FROM debian
 
 COPY acme-for-appliances /
