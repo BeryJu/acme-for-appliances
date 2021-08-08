@@ -9,7 +9,7 @@ RUN cd /go/src/github.com/BeryJu/acme-for-appliances && \
 # Final container
 FROM debian
 
-COPY --from=builder /go/bin/acme-for-appliances /acme-for-appliances
+COPY acme-for-appliances /
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends ca-certificates && \

@@ -18,12 +18,14 @@ var cfgFile string
 var force bool
 var infinite bool
 var checkInterval int
+var Version string
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{
-	Use:   "acme-for-appliances",
-	Short: "ACME Certificates for appliances",
-	Long:  `Use ACME Certificates for appliances which don't natively support them.`,
+	Use:     "acme-for-appliances",
+	Version: Version,
+	Short:   "ACME Certificates for appliances",
+	Long:    `Use ACME Certificates for appliances which don't natively support them.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if !infinite {
 			internal.Main(force)
