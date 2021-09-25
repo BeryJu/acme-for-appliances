@@ -12,7 +12,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/BeryJu/acme-for-appliances/internal/storage"
+	"beryju.org/acme-for-appliances/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
 

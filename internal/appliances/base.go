@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/BeryJu/acme-for-appliances/internal/keys"
+	"beryju.org/acme-for-appliances/internal/keys"
 	"github.com/go-acme/lego/v4/certificate"
 	log "github.com/sirupsen/logrus"
 )

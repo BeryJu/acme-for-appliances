@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/BeryJu/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certificate"
 	"github.com/pkg/errors"
 	"gopkg.in/square/go-jose.v2/json"

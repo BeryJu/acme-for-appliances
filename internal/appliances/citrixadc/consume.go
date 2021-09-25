@@ -4,7 +4,7 @@ import (
 	"encoding/base64"
 	"fmt"
 
-	"github.com/BeryJu/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/appliances"
 	"github.com/chiradeep/go-nitro/config/ssl"
 	"github.com/chiradeep/go-nitro/config/system"
 	"github.com/go-acme/lego/v4/certificate"

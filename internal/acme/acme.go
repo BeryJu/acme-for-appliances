@@ -3,7 +3,7 @@ package acme
 import (
 	log "github.com/sirupsen/logrus"
 
-	"github.com/BeryJu/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certcrypto"
 	"github.com/go-acme/lego/v4/certificate"
 	"github.com/go-acme/lego/v4/challenge/dns01"

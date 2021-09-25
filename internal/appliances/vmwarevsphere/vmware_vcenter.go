@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/BeryJu/acme-for-appliances/internal/appliances"
-	"github.com/BeryJu/acme-for-appliances/internal/keys"
+	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/keys"
 	"gopkg.in/square/go-jose.v2/json"
 )
 

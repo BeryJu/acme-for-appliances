@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/BeryJu/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/appliances"
 	"github.com/pkg/errors"
 )
 

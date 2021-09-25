@@ -1,4 +1,4 @@
-module github.com/BeryJu/acme-for-appliances
+module beryju.org/acme-for-appliances
 
 go 1.15
 

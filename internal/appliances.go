@@ -4,10 +4,10 @@ import (
 	"log"
 	"strings"
 
-	"github.com/BeryJu/acme-for-appliances/internal/appliances"
-	"github.com/BeryJu/acme-for-appliances/internal/appliances/citrixadc"
-	"github.com/BeryJu/acme-for-appliances/internal/appliances/netapp"
-	"github.com/BeryJu/acme-for-appliances/internal/appliances/vmwarevsphere"
+	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/appliances/citrixadc"
+	"beryju.org/acme-for-appliances/internal/appliances/netapp"
+	"beryju.org/acme-for-appliances/internal/appliances/vmwarevsphere"
 )
 
 func GetActual(a *appliances.Appliance) appliances.CertificateConsumer {

@@ -1,9 +1,9 @@
 package internal
 
 import (
-	"github.com/BeryJu/acme-for-appliances/internal/acme"
-	"github.com/BeryJu/acme-for-appliances/internal/appliances"
-	"github.com/BeryJu/acme-for-appliances/internal/storage"
+	"beryju.org/acme-for-appliances/internal/acme"
+	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/storage"
 	"github.com/mitchellh/mapstructure"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"

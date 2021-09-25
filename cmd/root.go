@@ -6,7 +6,7 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/BeryJu/acme-for-appliances/internal"
+	"beryju.org/acme-for-appliances/internal"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/spf13/cobra"
