@@ -21,8 +21,8 @@ func (adc *CitrixADC) Init() error {
 	// Validate Connection Details
 	client, err := netscaler.NewNitroClientFromParams(netscaler.NitroParams{
 		Url:       adc.URL,
-		Username:  adc.Username,
-		Password:  adc.Password,
+		Username:  adc.GetUsername(),
+		Password:  adc.GetPassword(),
 		SslVerify: adc.ValidateCerts,
 	})
 	if err != nil {

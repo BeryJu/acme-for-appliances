@@ -35,9 +35,6 @@ func Load(cfgFile string) {
 	viper.SetDefault("acme.refresh_threshold", 15)
 	viper.SetDefault("acme.resolvers", []string{})
 
-	viper.SetEnvPrefix("a4a")
-	viper.AutomaticEnv() // read in environment variables that match
-
 	// If a config file is found, read it in.
 	err := viper.ReadInConfig()
 	if err == nil {

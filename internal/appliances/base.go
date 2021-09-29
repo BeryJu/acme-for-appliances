@@ -4,6 +4,8 @@ import (
 	"crypto/tls"
 	"fmt"
 	"net/http"
+	"os"
+	"strings"
 
 	"beryju.org/acme-for-appliances/internal/keys"
 	"github.com/go-acme/lego/v4/certificate"
@@ -51,6 +53,24 @@ func (a *Appliance) GetName() string {
 
 func (a *Appliance) GetDomains() []string {
 	return a.Domains
+}
+
+func (a *Appliance) GetUsername() string {
+	if strings.HasPrefix(a.Username, "env:") {
+		envName := strings.Split(a.Username, "env:")
+		a.Logger.WithField("env", envName[1]).Debug("Got username from env")
+		return os.Getenv(envName[1])
+	}
+	return a.Username
+}
+
+func (a *Appliance) GetPassword() string {
+	if strings.HasPrefix(a.Password, "env:") {
+		envName := strings.Split(a.Password, "env:")
+		a.Logger.WithField("env", envName[1]).Debug("Got password from env")
+		return os.Getenv(envName[1])
+	}
+	return a.Password
 }
 
 func (a *Appliance) GetKeyGenerator(storageBase string) keys.KeyGenerator {

@@ -36,7 +36,7 @@ func (v *VMwareVsphere) Init() error {
 	if err != nil {
 		return err
 	}
-	req.SetBasicAuth(v.Username, v.Password)
+	req.SetBasicAuth(v.GetUsername(), v.GetPassword())
 	resp, err := v.client.Do(req)
 	if err != nil {
 		return err

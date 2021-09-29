@@ -27,9 +27,7 @@ For docker-compose, simply download the docker-compose.yml and the example confi
 
 ## Config
 
-Configuration is loaded from `config.toml` if the file exists. You can also set settings using environment variables:
-
-`A4A_ACME_USER_EMAIL=foo@bar.baz`
+Configuration is loaded from `config.toml` if the file exists.
 
 A minimal config looks like this, for a full example/reference, check out `config-example.toml`.
 
@@ -47,6 +45,8 @@ url = ""  # Base Connection URL
 validate_certs = false  # Validate HTTPS certificates
 username = "admin"
 password = "admin"
+# Alternatively, you can load username and password from environment variables, like so:
+# username = "env:MY_ENV_VAR"
 
 [appliances.my-appliance.extension]
 cert_name_a = "test-le-cert-a"

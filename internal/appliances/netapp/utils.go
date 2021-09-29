@@ -93,7 +93,7 @@ func (na *NetappAppliance) req(method string, path string, body interface{}) (*h
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to create get request")
 	}
-	req.SetBasicAuth(na.Username, na.Password)
+	req.SetBasicAuth(na.GetUsername(), na.GetPassword())
 	req.Header.Add("Accept", "application/json")
 	if body != nil {
 		req.Header.Add("Content-Type", "application/json")
