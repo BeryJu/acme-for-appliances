@@ -7,11 +7,10 @@ import (
 	"time"
 
 	"beryju.org/acme-for-appliances/internal"
+	"beryju.org/acme-for-appliances/internal/config"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/spf13/cobra"
-
-	"github.com/spf13/viper"
 )
 
 var cfgFile string
@@ -66,27 +65,5 @@ func init() {
 // initConfig reads in config file and ENV variables if set.
 func initConfig() {
 	log.SetLevel(log.DebugLevel)
-	viper.SetConfigType("toml")
-	if cfgFile != "" {
-		// Use config file from the flag.
-		viper.SetConfigFile(cfgFile)
-	} else {
-		viper.SetConfigFile("config.toml")
-	}
-
-	viper.SetDefault("storage", "storage")
-	viper.SetDefault("acme.directory_url", "https://acme-staging-v02.api.letsencrypt.org/directory")
-	viper.SetDefault("acme.refresh_threshold", 15)
-	viper.SetDefault("acme.resolvers", []string{})
-
-	viper.SetEnvPrefix("a4a")
-	viper.AutomaticEnv() // read in environment variables that match
-
-	// If a config file is found, read it in.
-	err := viper.ReadInConfig()
-	if err == nil {
-		log.Println("Using config file:", viper.ConfigFileUsed())
-	} else {
-		log.WithError(err).Warning("failed to load config file")
-	}
+	config.Load(cfgFile)
 }

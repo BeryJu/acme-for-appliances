@@ -26,20 +26,20 @@ func (s *State) CompareDomains(domains []string) bool {
 	return true
 }
 
-func (s *State) Write(name string) {
+func (s *State) Write(base string, name string) {
 	data, err := json.MarshalIndent(s, "", " ")
 	if err != nil {
 		logrus.WithError(err).Warning("Failed to write state")
 		return
 	}
-	err = ioutil.WriteFile(path.Join(PathPrefix(), fmt.Sprintf("%s.json", name)), data, 0644)
+	err = ioutil.WriteFile(path.Join(PathPrefix(base), fmt.Sprintf("%s.json", name)), data, 0644)
 	if err != nil {
 		logrus.WithError(err).Warning("Failed to write state")
 	}
 }
 
-func GetState(name string) *State {
-	jsonFile, err := os.Open(path.Join(PathPrefix(), fmt.Sprintf("%s.json", name)))
+func GetState(base string, name string) *State {
+	jsonFile, err := os.Open(path.Join(PathPrefix(base), fmt.Sprintf("%s.json", name)))
 	if err != nil {
 		logrus.WithError(err).Warning("Failed to read state")
 		return &State{}

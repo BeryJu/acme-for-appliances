@@ -3,17 +3,14 @@ package storage
 import (
 	"os"
 	"path"
-
-	"github.com/spf13/viper"
 )
 
-func PathPrefix() string {
-	storageDir := viper.GetString("storage")
+func PathPrefix(base string) string {
 	wd, err := os.Getwd()
 	if err != nil {
 		wd = "."
 	}
-	return path.Join(wd, storageDir)
+	return path.Join(wd, base)
 }
 
 func FileExists(path string) (bool, error) {

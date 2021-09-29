@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/config"
 	"beryju.org/acme-for-appliances/internal/keys"
 	"gopkg.in/square/go-jose.v2/json"
 )
@@ -50,6 +51,6 @@ func (v *VMwareVsphere) Init() error {
 	return v.EnsureKeys(VSphereConfigRootCAName)
 }
 
-func (v *VMwareVsphere) GetKeyGenerator() keys.KeyGenerator {
-	return keys.NewRSAKeyGenerator()
+func (v *VMwareVsphere) GetKeyGenerator(storageBase string) keys.KeyGenerator {
+	return keys.NewRSAKeyGenerator(config.C.Storage)
 }

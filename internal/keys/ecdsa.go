@@ -17,17 +17,19 @@ import (
 )
 
 type ECDSAKeyGenerator struct {
-	log *log.Entry
+	log         *log.Entry
+	storageBase string
 }
 
-func NewECDSAKeyGenerator() *ECDSAKeyGenerator {
+func NewECDSAKeyGenerator(storageBase string) *ECDSAKeyGenerator {
 	return &ECDSAKeyGenerator{
-		log: log.WithField("component", "ecdsa-generator"),
+		storageBase: storageBase,
+		log:         log.WithField("component", "ecdsa-generator"),
 	}
 }
 
 func (e *ECDSAKeyGenerator) GetPrivateKey(name string) crypto.PrivateKey {
-	keyPath := path.Join(storage.PathPrefix(), fmt.Sprintf("%s.pem", name))
+	keyPath := path.Join(storage.PathPrefix(e.storageBase), fmt.Sprintf("%s.pem", name))
 	exists, err := storage.FileExists(keyPath)
 	if err != nil {
 		e.log.WithError(err).Warning("failed to read key")

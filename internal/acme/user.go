@@ -4,6 +4,7 @@ import (
 	"crypto"
 	"path"
 
+	"beryju.org/acme-for-appliances/internal/config"
 	"beryju.org/acme-for-appliances/internal/keys"
 	"beryju.org/acme-for-appliances/internal/storage"
 	"github.com/go-acme/lego/v4/registration"
@@ -28,7 +29,7 @@ func (u User) GetRegistration() *registration.Resource {
 func (u *User) GetPrivateKey() crypto.PrivateKey {
 	l := log.WithField("component", "user")
 	// Check if we have a key at all
-	fullPath := path.Join(storage.PathPrefix(), UserKeyName)
+	fullPath := path.Join(storage.PathPrefix(config.C.Storage), UserKeyName)
 	exists, err := storage.FileExists(fullPath)
 	if !exists {
 		l.Info("Key does not exist, creating a new key")

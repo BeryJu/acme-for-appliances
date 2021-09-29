@@ -16,17 +16,19 @@ import (
 )
 
 type RSAKeyGenerator struct {
-	log *log.Entry
+	log         *log.Entry
+	storageBase string
 }
 
-func NewRSAKeyGenerator() *RSAKeyGenerator {
+func NewRSAKeyGenerator(storageBase string) *RSAKeyGenerator {
 	return &RSAKeyGenerator{
-		log: log.WithField("component", "rsa-generator"),
+		storageBase: storageBase,
+		log:         log.WithField("component", "rsa-generator"),
 	}
 }
 
 func (e *RSAKeyGenerator) GetPrivateKey(name string) crypto.PrivateKey {
-	keyPath := path.Join(storage.PathPrefix(), fmt.Sprintf("%s.pem", name))
+	keyPath := path.Join(storage.PathPrefix(e.storageBase), fmt.Sprintf("%s.pem", name))
 	exists, err := storage.FileExists(keyPath)
 	if err != nil {
 		e.log.WithError(err).Warning("failed to read key")

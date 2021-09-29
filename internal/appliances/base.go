@@ -53,8 +53,8 @@ func (a *Appliance) GetDomains() []string {
 	return a.Domains
 }
 
-func (a *Appliance) GetKeyGenerator() keys.KeyGenerator {
-	return keys.NewECDSAKeyGenerator()
+func (a *Appliance) GetKeyGenerator(storageBase string) keys.KeyGenerator {
+	return keys.NewECDSAKeyGenerator(storageBase)
 }
 
 type CertificateConsumer interface {
@@ -63,5 +63,5 @@ type CertificateConsumer interface {
 	Consume(*certificate.Resource) error
 	GetName() string
 	GetDomains() []string
-	GetKeyGenerator() keys.KeyGenerator
+	GetKeyGenerator(storageBase string) keys.KeyGenerator
 }
