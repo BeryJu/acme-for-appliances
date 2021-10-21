@@ -66,4 +66,5 @@ func init() {
 func initConfig() {
 	log.SetLevel(log.DebugLevel)
 	config.Load(cfgFile)
+	log.WithField("version", Version).Info("acme-for-appliances")
 }
