@@ -8,6 +8,7 @@ import (
 
 	"beryju.org/acme-for-appliances/internal"
 	"beryju.org/acme-for-appliances/internal/config"
+	"github.com/getsentry/sentry-go"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/spf13/cobra"
@@ -32,9 +33,10 @@ var rootCmd = &cobra.Command{
 		}
 		d := time.Duration(checkInterval) * time.Hour
 		ticker := time.NewTicker(d)
-		quit := make(chan os.Signal)
+		quit := make(chan os.Signal, 1)
 		signal.Notify(quit, os.Interrupt)
 		log.Infof("Running, will check in %s", d)
+		defer sentry.Flush(2 * time.Second)
 		for {
 			select {
 			case <-ticker.C:
@@ -67,4 +69,14 @@ func initConfig() {
 	log.SetLevel(log.DebugLevel)
 	config.Load(cfgFile)
 	log.WithField("version", Version).Info("acme-for-appliances")
+	if os.Getenv("DISABLE_SENTRY") != "true" {
+		err := sentry.Init(sentry.ClientOptions{
+			Dsn:              "https://52929b6b754742a3bb6a39ef5839b8e9@sentry.beryju.org/13",
+			AttachStacktrace: true,
+			TracesSampleRate: 1,
+		})
+		if err != nil {
+			log.Fatalf("sentry.Init: %s", err)
+		}
+	}
 }

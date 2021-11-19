@@ -10,6 +10,7 @@ services:
     #   # You can configure the rest of the options here as well,
     #   # if you don't want a toml file.
     #   A4A_ACME_USER_EMAIL=foo@bar.baz
+    #   # DISABLE_SENTRY=false
     volumes:
       - ./storage:/storage
       - ./config.toml:/config.toml
