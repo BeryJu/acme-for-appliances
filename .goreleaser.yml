@@ -65,7 +65,9 @@ docker_manifests:
   - ghcr.io/beryju/{{ .ProjectName }}:{{ .Version }}-amd64
   - ghcr.io/beryju/{{ .ProjectName }}:{{ .Version }}-arm64v8
 brews:
-  - tap:
+  - ids:
+      - raw
+    tap:
       owner: beryju
       name: homebrew-tap
     commit_author:
