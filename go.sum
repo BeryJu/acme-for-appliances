@@ -209,8 +209,8 @@ github.com/getsentry/sentry-go v0.12.0/go.mod h1:NSap0JBYWzHND8oMbyi0+XZhUalc1TB
 github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeMEF04=
 github.com/gin-contrib/sse v0.0.0-20190301062529-5545eab6dad3/go.mod h1:VJ0WA2NBN22VlZ2dKZQPAPnyWw5XTlK1KymzLKsr59s=
 github.com/gin-gonic/gin v1.4.0/go.mod h1:OW2EZn3DO8Ln9oIKOvM++LBO+5UPHJJDH72/q/3rZdM=
-github.com/go-acme/lego/v4 v4.5.3 h1:v5RSN8l+RAeNHKTSL80eqLiec6q6UNaFpl2Df5x/5tM=
-github.com/go-acme/lego/v4 v4.5.3/go.mod h1:mL1DY809LzjvRuaxINNxsI26f5oStVhBGTpJMiinkZM=
+github.com/go-acme/lego/v4 v4.6.0 h1:w1rQtE/YHY5SupCTRpRJQbaZ6bkySJJ0z+kl8p6pVJU=
+github.com/go-acme/lego/v4 v4.6.0/go.mod h1:v19/zU0bumGNzvsbx07zQ6c9IxAvy55XIKhXCZio3NQ=
 github.com/go-check/check v0.0.0-20180628173108-788fd7840127/go.mod h1:9ES+weclKsC9YodN5RgxqK/VD9HM9JsCSh7rNhMZE98=
 github.com/go-chi/chi/v5 v5.0.0/go.mod h1:BBug9lr0cqtdAhsu6R4AAdvufI0/XBzAQSsUqJpoZOs=
 github.com/go-cmd/cmd v1.0.5/go.mod h1:y8q8qlK5wQibcw63djSl/ntiHUHXHGdCkPk0j4QeW4s=
@@ -692,6 +692,10 @@ github.com/stretchr/testify v1.7.0 h1:nwc3DEeHmmLAfoZucVR881uASk0Mfjw8xYJ99tb5Cc
 github.com/stretchr/testify v1.7.0/go.mod h1:6Fq8oRcR53rry900zMqJjRRixrwX3KX962/h/Wwjteg=
 github.com/subosito/gotenv v1.2.0 h1:Slr1R9HxAlEKefgq5jn9U+DnETlIUa6HfgEzj0g5d7s=
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.287 h1:ohsyW4WffPdd2JLPio2Sd0qGr93hzkawAt9vWdCFLgY=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/common v1.0.287/go.mod h1:7sCQWVkxcsR38nffDW057DRGk8mUjK1Ing/EFOK8s8Y=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.287 h1:O/ycBVvdOAmwFlXm0fCtLz2WOr1EaWZQTDM/4pmVT+s=
+github.com/tencentcloud/tencentcloud-sdk-go/tencentcloud/dnspod v1.0.287/go.mod h1:CuOaLxOQr477GhMWAQPYQFUJrsZbW+ZqkAgP2uHDZXg=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
 github.com/transip/gotransip/v6 v6.6.1 h1:nsCU1ErZS5G0FeOpgGXc4FsWvBff9GPswSMggsC4564=
 github.com/transip/gotransip/v6 v6.6.1/go.mod h1:pQZ36hWWRahCUXkFWlx9Hs711gLd8J4qdgLdRzmtY+g=
@@ -710,8 +714,8 @@ github.com/valyala/fasthttp v1.6.0/go.mod h1:FstJa9V+Pj9vQ7OJie2qMHdwemEDaDiSdBn
 github.com/valyala/fasttemplate v1.0.1/go.mod h1:UQGH1tvbgY+Nz5t2n7tXsz52dQxojPUpymEIMZ47gx8=
 github.com/valyala/fasttemplate v1.2.1/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=
 github.com/valyala/tcplisten v0.0.0-20161114210144-ceec8f93295a/go.mod h1:v3UYOV9WzVtRmSR+PDvWpU/qWl4Wa5LApYYX4ZtKbio=
-github.com/vinyldns/go-vinyldns v0.0.0-20200917153823-148a5f6b8f14 h1:TFXGGMHmml4rs29PdPisC/aaCzOxUu1Vsh9on/IpUfE=
-github.com/vinyldns/go-vinyldns v0.0.0-20200917153823-148a5f6b8f14/go.mod h1:RWc47jtnVuQv6+lY3c768WtXCas/Xi+U5UFc5xULmYg=
+github.com/vinyldns/go-vinyldns v0.9.16 h1:GZJStDkcCk1F1AcRc64LuuMh+ENL8pHA0CVd4ulRMcQ=
+github.com/vinyldns/go-vinyldns v0.9.16/go.mod h1:5qIJOdmzAnatKjurI+Tl4uTus7GJKJxb+zitufjHs3Q=
 github.com/vultr/govultr/v2 v2.7.1 h1:uF9ERet++Gb+7Cqs3p1P6b6yebeaZqVd7t5P2uZCaJU=
 github.com/vultr/govultr/v2 v2.7.1/go.mod h1:BvOhVe6/ZpjwcoL6/unkdQshmbS9VGbowI4QT+3DGVU=
 github.com/xeipuuv/gojsonpointer v0.0.0-20180127040702-4e3ac2762d5f/go.mod h1:N2zxlSyiKSe5eX1tZViRH5QA0qijqEDrYZiPEAiq3wU=
@@ -768,6 +772,7 @@ golang.org/x/crypto v0.0.0-20200820211705-5c72a883971a/go.mod h1:LzIPMQfyMNhhGPh
 golang.org/x/crypto v0.0.0-20201002170205-7f63de1d35b0/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
 golang.org/x/crypto v0.0.0-20201016220609-9e8e0b390897/go.mod h1:LzIPMQfyMNhhGPhUkYOs5KpL4U8rLKemX1yGLhDgUto=
 golang.org/x/crypto v0.0.0-20201221181555-eec23a3978ad/go.mod h1:jdWPYTVW3xRLrWPugEBEK3UY2ZEsg3UU495nc5E+M+I=
+golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83/go.mod h1:jdWPYTVW3xRLrWPugEBEK3UY2ZEsg3UU495nc5E+M+I=
 golang.org/x/crypto v0.0.0-20210322153248-0c34fe9e7dc2/go.mod h1:T9bdIzuCu7OtxOm1hfPfRQxPLYneinmdGuTeoZ9dtd4=
 golang.org/x/crypto v0.0.0-20210513164829-c07d793c2f9a/go.mod h1:P+XmwS30IXTQdn5tA2iutPOUgjI07+tq3H3K9MVA1s8=
 golang.org/x/crypto v0.0.0-20210616213533-5ff15b29337e/go.mod h1:GvvjBRRGRdwPK5ydBHafDWAxML/pGHZbMvKqRZ5+Abc=
@@ -858,7 +863,6 @@ golang.org/x/net v0.0.0-20210410081132-afb366fc7cd1/go.mod h1:9tjilg8BloeKEkVJvy
 golang.org/x/net v0.0.0-20210428140749-89ef3d95e781/go.mod h1:OJAsFXCWl8Ukc7SiCT/9KSuxbyM7479/AVlXFRxuMCk=
 golang.org/x/net v0.0.0-20210503060351-7fd8e65b6420/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20210510120150-4163338589ed/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
-golang.org/x/net v0.0.0-20210614182718-04defd469f4e/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20210813160813-60bc85c4be6d/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
 golang.org/x/net v0.0.0-20211008194852-3b03d305991f h1:1scJEYZBaF48BaG6tYbtxmLcXqwYGSfGcMoStTqkkIw=
 golang.org/x/net v0.0.0-20211008194852-3b03d305991f/go.mod h1:9nx3DQGgdP8bBQD5qxJ1jj9UTztislL4KSBs9R2vV5Y=
@@ -1260,3 +1264,4 @@ honnef.co/go/tools v0.0.1-2020.1.4/go.mod h1:X/FiERA/W4tHapMX5mGpAtMSVEeEUOyHaw9
 rsc.io/binaryregexp v0.2.0/go.mod h1:qTv7/COck+e2FymRvadv62gMdZztPaShugOCi3I+8D8=
 rsc.io/quote/v3 v3.1.0/go.mod h1:yEA65RcK8LyAZtP9Kv3t0HmxON59tX3rD+tICJqUlj0=
 rsc.io/sampler v1.3.0/go.mod h1:T1hPZKmBbMNahiBKFy5HrXp6adAjACjK9JXDnKaTXpA=
+software.sslmate.com/src/go-pkcs12 v0.0.0-20210415151418-c5206de65a78/go.mod h1:B7Wf0Ya4DHF9Yw+qfZuJijQYkWicqDa+79Ytmmq3Kjg=
