@@ -9,7 +9,7 @@ require (
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pelletier/go-toml v1.9.5 // indirect
 	github.com/pkg/errors v0.9.1
-	github.com/sirupsen/logrus v1.9.1
+	github.com/sirupsen/logrus v1.9.2
 	github.com/smartystreets/assertions v1.13.0 // indirect
 	github.com/spf13/cobra v1.7.0
 	github.com/spf13/viper v1.15.0
