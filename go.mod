@@ -12,6 +12,6 @@ require (
 	github.com/sirupsen/logrus v1.9.2
 	github.com/smartystreets/assertions v1.13.0 // indirect
 	github.com/spf13/cobra v1.7.0
-	github.com/spf13/viper v1.15.0
+	github.com/spf13/viper v1.16.0
 	gopkg.in/square/go-jose.v2 v2.6.0
 )
