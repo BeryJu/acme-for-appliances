@@ -1,4 +1,4 @@
-package citrixadc
+package citrix_adc
 
 import (
 	"beryju.org/acme-for-appliances/internal/appliances"

@@ -1,4 +1,4 @@
-package netapp
+package netapp_ontap
 
 import (
 	"encoding/json"

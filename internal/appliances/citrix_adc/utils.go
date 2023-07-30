@@ -1,4 +1,4 @@
-package citrixadc
+package citrix_adc
 
 import (
 	"net/url"

@@ -72,6 +72,7 @@ func initConfig() {
 	if os.Getenv("DISABLE_SENTRY") != "true" {
 		err := sentry.Init(sentry.ClientOptions{
 			Dsn:              "https://52929b6b754742a3bb6a39ef5839b8e9@sentry.beryju.org/13",
+			Release:          fmt.Sprintf("acme-for-appliances@%s", Version),
 			AttachStacktrace: true,
 			TracesSampleRate: 1,
 		})

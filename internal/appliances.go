@@ -5,23 +5,23 @@ import (
 	"strings"
 
 	"beryju.org/acme-for-appliances/internal/appliances"
-	"beryju.org/acme-for-appliances/internal/appliances/citrixadc"
-	"beryju.org/acme-for-appliances/internal/appliances/netapp"
-	"beryju.org/acme-for-appliances/internal/appliances/vmwarevsphere"
+	"beryju.org/acme-for-appliances/internal/appliances/citrix_adc"
+	"beryju.org/acme-for-appliances/internal/appliances/netapp_ontap"
+	"beryju.org/acme-for-appliances/internal/appliances/vmware_vsphere"
 )
 
 func GetActual(a *appliances.Appliance) appliances.CertificateConsumer {
 	switch strings.ToLower(a.Type) {
 	case "netapp":
-		return &netapp.NetappAppliance{
+		return &netapp_ontap.NetappAppliance{
 			Appliance: *a,
 		}
 	case "citrix_adc":
-		return &citrixadc.CitrixADC{
+		return &citrix_adc.CitrixADC{
 			Appliance: *a,
 		}
 	case "vmware_vcenter":
-		return &vmwarevsphere.VMwareVsphere{
+		return &vmware_vsphere.VMwareVsphere{
 			Appliance: *a,
 		}
 	default:

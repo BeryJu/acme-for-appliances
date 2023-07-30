@@ -58,7 +58,7 @@ func (a *Appliance) GetDomains() []string {
 func (a *Appliance) GetUsername() string {
 	if strings.HasPrefix(a.Username, "env:") {
 		envName := strings.Split(a.Username, "env:")
-		a.Logger.WithField("env", envName[1]).Debug("Got username from env")
+		a.Logger.WithField("env", envName[1]).Trace("Got username from env")
 		return os.Getenv(envName[1])
 	}
 	return a.Username
@@ -67,7 +67,7 @@ func (a *Appliance) GetUsername() string {
 func (a *Appliance) GetPassword() string {
 	if strings.HasPrefix(a.Password, "env:") {
 		envName := strings.Split(a.Password, "env:")
-		a.Logger.WithField("env", envName[1]).Debug("Got password from env")
+		a.Logger.WithField("env", envName[1]).Trace("Got password from env")
 		return os.Getenv(envName[1])
 	}
 	return a.Password

@@ -1,4 +1,4 @@
-package vmwarevsphere
+package vmware_vsphere
 
 type vmwareVsphereSessionResponse struct {
 	Value string `json:"value"`

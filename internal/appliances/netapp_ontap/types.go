@@ -1,4 +1,4 @@
-package netapp
+package netapp_ontap
 
 type ontapSVMSelector struct {
 	Name string `json:"name,omitempty"`

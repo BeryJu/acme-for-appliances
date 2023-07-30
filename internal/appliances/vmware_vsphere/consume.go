@@ -1,4 +1,4 @@
-package vmwarevsphere
+package vmware_vsphere
 
 import (
 	"bytes"

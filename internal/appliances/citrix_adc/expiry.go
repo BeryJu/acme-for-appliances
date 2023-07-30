@@ -1,4 +1,4 @@
-package citrixadc
+package citrix_adc
 
 import (
 	"github.com/chiradeep/go-nitro/config/ssl"
