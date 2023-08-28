@@ -3,7 +3,7 @@ package synology_dsm
 import (
 	"errors"
 
-	"beryju.org/acme-for-appliances/internal/appliances/synology_dsm/api"
+	"beryju.io/acme-for-appliances/internal/appliances/synology_dsm/api"
 	"github.com/go-acme/lego/v4/certificate"
 )
 

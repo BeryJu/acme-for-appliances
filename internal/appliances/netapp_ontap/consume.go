@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"time"
 
-	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.io/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certificate"
 	"github.com/pkg/errors"
 )

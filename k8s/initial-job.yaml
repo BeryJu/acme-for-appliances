@@ -22,7 +22,7 @@ spec:
         envFrom:
         - secretRef:
             name: acme-for-appliances-dns-settings
-        image: beryju.org/acme-for-appliances:latest
+        image: beryju.io/acme-for-appliances:latest
         imagePullPolicy: Always
         name: acme-for-appliances
         volumeMounts:

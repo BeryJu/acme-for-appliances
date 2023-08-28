@@ -5,9 +5,9 @@ import (
 	"net/http"
 	"time"
 
-	"beryju.org/acme-for-appliances/internal/appliances"
-	"beryju.org/acme-for-appliances/internal/config"
-	"beryju.org/acme-for-appliances/internal/keys"
+	"beryju.io/acme-for-appliances/internal/appliances"
+	"beryju.io/acme-for-appliances/internal/config"
+	"beryju.io/acme-for-appliances/internal/keys"
 	"gopkg.in/square/go-jose.v2/json"
 )
 

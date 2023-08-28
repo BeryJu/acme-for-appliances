@@ -4,9 +4,9 @@ import (
 	"crypto"
 	"path"
 
-	"beryju.org/acme-for-appliances/internal/config"
-	"beryju.org/acme-for-appliances/internal/keys"
-	"beryju.org/acme-for-appliances/internal/storage"
+	"beryju.io/acme-for-appliances/internal/config"
+	"beryju.io/acme-for-appliances/internal/keys"
+	"beryju.io/acme-for-appliances/internal/storage"
 	"github.com/go-acme/lego/v4/registration"
 	log "github.com/sirupsen/logrus"
 )

@@ -11,7 +11,7 @@ import (
 	"os"
 	"path"
 
-	"beryju.org/acme-for-appliances/internal/storage"
+	"beryju.io/acme-for-appliances/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
 

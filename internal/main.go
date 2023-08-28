@@ -1,9 +1,9 @@
 package internal
 
 import (
-	"beryju.org/acme-for-appliances/internal/acme"
-	"beryju.org/acme-for-appliances/internal/config"
-	"beryju.org/acme-for-appliances/internal/storage"
+	"beryju.io/acme-for-appliances/internal/acme"
+	"beryju.io/acme-for-appliances/internal/config"
+	"beryju.io/acme-for-appliances/internal/storage"
 	log "github.com/sirupsen/logrus"
 )
 

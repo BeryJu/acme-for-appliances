@@ -9,7 +9,7 @@ import (
 	"math/big"
 	"time"
 
-	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.io/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certificate"
 	log "github.com/sirupsen/logrus"
 )

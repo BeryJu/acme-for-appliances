@@ -6,8 +6,8 @@ import (
 	"os/signal"
 	"time"
 
-	"beryju.org/acme-for-appliances/internal"
-	"beryju.org/acme-for-appliances/internal/config"
+	"beryju.io/acme-for-appliances/internal"
+	"beryju.io/acme-for-appliances/internal/config"
 	"github.com/getsentry/sentry-go"
 	log "github.com/sirupsen/logrus"
 

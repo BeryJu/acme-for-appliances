@@ -1,7 +1,7 @@
 package citrix_adc
 
 import (
-	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.io/acme-for-appliances/internal/appliances"
 	"github.com/chiradeep/go-nitro/netscaler"
 	"github.com/pkg/errors"
 )

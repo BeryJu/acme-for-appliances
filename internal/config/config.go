@@ -1,7 +1,7 @@
 package config
 
 import (
-	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.io/acme-for-appliances/internal/appliances"
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )

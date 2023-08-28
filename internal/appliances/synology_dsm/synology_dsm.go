@@ -1,8 +1,8 @@
 package synology_dsm
 
 import (
-	"beryju.org/acme-for-appliances/internal/appliances"
-	"beryju.org/acme-for-appliances/internal/appliances/synology_dsm/api"
+	"beryju.io/acme-for-appliances/internal/appliances"
+	"beryju.io/acme-for-appliances/internal/appliances/synology_dsm/api"
 )
 
 type SynologyDSM struct {

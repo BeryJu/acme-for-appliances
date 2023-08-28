@@ -1,8 +1,8 @@
 package acme
 
 import (
-	"beryju.org/acme-for-appliances/internal/appliances"
-	"beryju.org/acme-for-appliances/internal/config"
+	"beryju.io/acme-for-appliances/internal/appliances"
+	"beryju.io/acme-for-appliances/internal/config"
 	log "github.com/sirupsen/logrus"
 
 	"github.com/go-acme/lego/v4/certcrypto"

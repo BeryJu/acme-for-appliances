@@ -1,6 +1,6 @@
 package main
 
-import "beryju.org/acme-for-appliances/cmd"
+import "beryju.io/acme-for-appliances/cmd"
 
 func main() {
 	cmd.Execute()
