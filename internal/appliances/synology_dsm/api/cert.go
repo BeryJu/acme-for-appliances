@@ -1,4 +1,4 @@
-package synology_dsm
+package api
 
 import (
 	"encoding/json"
@@ -18,7 +18,7 @@ type SynologyAPICertListResponse struct {
 	SynologyAPIResponse
 }
 
-func (dsm *SynologyDSM) listCertificates() (*SynologyAPICertListResponse, error) {
+func (dsm *SynologyAPI) ListCertificates() (*SynologyAPICertListResponse, error) {
 	req, err := dsm.makeRequest(http.MethodGet, "webapi/entry.cgi", map[string]string{
 		"api":     string(SynoAPICoreCertCRT),
 		"version": "1",
@@ -27,7 +27,7 @@ func (dsm *SynologyDSM) listCertificates() (*SynologyAPICertListResponse, error)
 	if err != nil {
 		return nil, err
 	}
-	res, err := dsm.HTTPClient().Do(req)
+	res, err := dsm.Client.Do(req)
 	if err != nil {
 		return nil, err
 	}
@@ -39,7 +39,7 @@ func (dsm *SynologyDSM) listCertificates() (*SynologyAPICertListResponse, error)
 	return &r, nil
 }
 
-func (dsm *SynologyDSM) uploadCertificate(existing *SynologyAPICert, cert, intermediate, key []byte) (*SynologyAPIResponse, error) {
+func (dsm *SynologyAPI) UploadCertificate(existing *SynologyAPICert, cert, intermediate, key []byte) (*SynologyAPIResponse, error) {
 	params := map[string]string{
 		"api":     string(SynoAPICoreCert),
 		"version": "1",
@@ -69,7 +69,7 @@ func (dsm *SynologyDSM) uploadCertificate(existing *SynologyAPICert, cert, inter
 	if err != nil {
 		return nil, err
 	}
-	res, err := dsm.HTTPClient().Do(req)
+	res, err := dsm.Client.Do(req)
 	if err != nil {
 		return nil, err
 	}

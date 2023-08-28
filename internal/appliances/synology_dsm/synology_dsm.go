@@ -1,23 +1,27 @@
 package synology_dsm
 
 import (
-	"net/http"
-
 	"beryju.org/acme-for-appliances/internal/appliances"
+	"beryju.org/acme-for-appliances/internal/appliances/synology_dsm/api"
 )
 
 type SynologyDSM struct {
 	appliances.Appliance
 
-	client *http.Client
-	sid    string
+	client *api.SynologyAPI
 
-	existingCert *SynologyAPICert
+	existingCert *api.SynologyAPICert
 }
 
 func (dsm *SynologyDSM) Init() error {
-	dsm.client = dsm.HTTPClient()
-	err := dsm.login()
+	dsm.client = &api.SynologyAPI{
+		URL:      dsm.URL,
+		Username: dsm.Username,
+		Password: dsm.Password,
+		Client:   dsm.HTTPClient(),
+		Logger:   dsm.Logger.WithField("component", "api"),
+	}
+	err := dsm.client.Login()
 	if err != nil {
 		return err
 	}

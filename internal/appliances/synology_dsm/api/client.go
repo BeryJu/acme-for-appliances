@@ -1,4 +1,4 @@
-package synology_dsm
+package api
 
 import (
 	"bytes"
@@ -7,13 +7,25 @@ import (
 	"net/http"
 	"net/url"
 	"path/filepath"
+
+	log "github.com/sirupsen/logrus"
 )
+
+type SynologyAPI struct {
+	URL      string
+	Username string
+	Password string
+	Logger   *log.Entry
+	Client   *http.Client
+
+	sid string
+}
 
 type SynologyAPIResponse struct {
 	Success bool `json:"success"`
 }
 
-func (dsm *SynologyDSM) makeRequest(method string, path string, params map[string]string, body io.Reader) (*http.Request, error) {
+func (dsm *SynologyAPI) makeRequest(method string, path string, params map[string]string, body io.Reader) (*http.Request, error) {
 	b, err := url.Parse(dsm.URL)
 	if err != nil {
 		return nil, err
@@ -43,7 +55,7 @@ type APIFile struct {
 	Data []byte
 }
 
-func (dsm *SynologyDSM) makeFileRequest(method string, path string, params map[string]string, files ...APIFile) (*http.Request, error) {
+func (dsm *SynologyAPI) makeFileRequest(method string, path string, params map[string]string, files ...APIFile) (*http.Request, error) {
 	var (
 		buf = new(bytes.Buffer)
 		w   = multipart.NewWriter(buf)

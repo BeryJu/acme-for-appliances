@@ -1,4 +1,4 @@
-package synology_dsm
+package api
 
 type SynoAPI string
 

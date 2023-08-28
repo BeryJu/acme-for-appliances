@@ -1,4 +1,4 @@
-package synology_dsm
+package api
 
 import (
 	"encoding/json"
@@ -12,7 +12,7 @@ type SynologyAPILoginResponse struct {
 	SynologyAPIResponse
 }
 
-func (dsm *SynologyDSM) login() error {
+func (dsm *SynologyAPI) Login() error {
 	if dsm.sid != "" {
 		return nil
 	}
@@ -27,7 +27,7 @@ func (dsm *SynologyDSM) login() error {
 	if err != nil {
 		return err
 	}
-	res, err := dsm.client.Do(req)
+	res, err := dsm.Client.Do(req)
 	if err != nil {
 		return err
 	}

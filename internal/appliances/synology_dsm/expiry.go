@@ -4,20 +4,8 @@ import (
 	"time"
 )
 
-// func (dsm *SynologyDSM) debug() {
-// 	req, _ := dsm.makeRequest(http.MethodGet, "webapi/query.cgi", map[string]string{
-// 		"api":     "SYNO.API.Info",
-// 		"version": "1",
-// 		"method":  "query",
-// 		"query":   "all",
-// 	}, nil)
-// 	res, _ := dsm.HTTPClient().Do(req)
-// 	b, _ := io.ReadAll(res.Body)
-// 	fmt.Println(string(b))
-// }
-
 func (dsm *SynologyDSM) CheckExpiry() (int, error) {
-	certs, err := dsm.listCertificates()
+	certs, err := dsm.client.ListCertificates()
 	if err != nil {
 		return 0, err
 	}
