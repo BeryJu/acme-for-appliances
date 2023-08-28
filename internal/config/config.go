@@ -15,6 +15,7 @@ type Config struct {
 		ChallengeProviderName string   `mapstructure:"challenge_provider_name"`
 		UserEmail             string   `mapstructure:"user_email"`
 		RefreshThreshold      int      `mapstructure:"refresh_threshold"`
+		Debug                 bool     `mapstructure:"debug"`
 	} `mapstructure:"acme"`
 	Appliances map[string]appliances.Appliance `mapstructure:"appliances"`
 }

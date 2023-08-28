@@ -44,6 +44,10 @@ func NewClient(u *User) *Client {
 }
 
 func (c *Client) GetCerts(app appliances.CertificateConsumer) (*certificate.Resource, error) {
+	if config.C.ACME.Debug {
+		return c.GetCertsFake(app)
+	}
+
 	provider, err := dns.NewDNSChallengeProviderByName(config.C.ACME.ChallengeProviderName)
 	if err != nil {
 		log.Fatal(err)
