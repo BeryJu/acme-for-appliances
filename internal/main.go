@@ -36,7 +36,7 @@ func Main(force bool) {
 		// Check if domains are the same, otherwise renew
 		s := storage.GetState(config.C.Storage, appName)
 		if !s.CompareDomains(app.Domains) {
-			al.WithField("expiry", expiry).Info("Domains changed, forcing renewal")
+			al.Info("Domains changed, forcing renewal")
 		} else if expiry >= threshold && !force {
 			al.WithField("threshold", threshold).WithField("expiry", expiry).Info("Cert doesn't need to be renewed")
 			continue
