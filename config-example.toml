@@ -16,10 +16,13 @@ terms_agreed = false
 # All providers from "lego" are supported, see https://go-acme.github.io/lego/dns/
 # To Configure the provider, consult the page for your provider
 challenge_provider_name = "route53"
+# Enable debug mode, which uses a self-signed certificate and can be used
+# to test appliance connection and implementation
+# debug = false
 
 # ----- Appliance block
 [appliances.my-appliance]
-# Appliance type, currently supported: "netapp", "citrix_adc", "vmware_vcenter"
+# Appliance type, currently supported: "netapp", "citrix_adc", "vmware_vcenter", "synology_dsm"
 type = "netapp"
 # Domains that the certificate should have
 domains = [
@@ -64,4 +67,10 @@ password = "admin"
 # vCenter requires this explicitly stated.
 # In the case of Let's Encrypt, this is will be https://www.identrust.com/dst-root-ca-x3
 # root_ca = """
+# """
+
+# ----- Synology DSM Extension of Appliance block
+# [appliances.my-appliance.extension]
+# Description of the certificate managed by us, can be any string
+# cert_desc = "my-le-cert"
 # """
