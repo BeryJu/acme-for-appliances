@@ -1,6 +1,8 @@
 package acme
 
 import (
+	"time"
+
 	"beryju.io/acme-for-appliances/internal/appliances"
 	"beryju.io/acme-for-appliances/internal/config"
 	log "github.com/sirupsen/logrus"
@@ -53,7 +55,9 @@ func (c *Client) GetCerts(app appliances.CertificateConsumer) (*certificate.Reso
 		log.Fatal(err)
 	}
 
-	opts := []dns01.ChallengeOption{}
+	opts := []dns01.ChallengeOption{
+		dns01.AddDNSTimeout(20 * time.Second),
+	}
 
 	if len(config.C.ACME.Resolvers) > 0 {
 		log.WithField("resolvers", config.C.ACME.Resolvers).Debug("Using custom resolvers")
