@@ -80,3 +80,4 @@ data:
 kind: ConfigMap
 metadata:
   name: acme-for-appliances-config
+  namespace: acme-for-appliances

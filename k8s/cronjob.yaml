@@ -1,7 +1,8 @@
-apiVersion: batch/v1beta1
+apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: acme-for-appliances
+  namespace: acme-for-appliances
 spec:
   schedule: "5 3 * * *"
   concurrencyPolicy: Forbid
@@ -19,7 +20,7 @@ spec:
                 claimName: acme-for-appliances-keys
           containers:
           - name: acme-for-appliances
-            image: beryju.io/acme-for-appliances:latest
+            image: ghcr.io/beryju/acme-for-appliances:latest
             imagePullPolicy: Always
             command:
               - /acme-for-appliances
