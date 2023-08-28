@@ -3,7 +3,7 @@ package storage
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"path"
 
@@ -32,7 +32,7 @@ func (s *State) Write(base string, name string) {
 		logrus.WithError(err).Warning("Failed to write state")
 		return
 	}
-	err = ioutil.WriteFile(path.Join(PathPrefix(base), fmt.Sprintf("%s.json", name)), data, 0644)
+	err = os.WriteFile(path.Join(PathPrefix(base), fmt.Sprintf("%s.json", name)), data, 0644)
 	if err != nil {
 		logrus.WithError(err).Warning("Failed to write state")
 	}
@@ -45,7 +45,7 @@ func GetState(base string, name string) *State {
 		return &State{}
 	}
 	defer jsonFile.Close()
-	byteValue, err := ioutil.ReadAll(jsonFile)
+	byteValue, err := io.ReadAll(jsonFile)
 	if err != nil {
 		logrus.WithError(err).Warning("Failed to read state")
 		return &State{}

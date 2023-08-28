@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"net/http"
 	"net/url"
 
@@ -46,7 +45,7 @@ func (na *NetappAppliance) DeleteCert(uuid string) error {
 	if err != nil {
 		return errors.Wrap(err, "failed to delete certificate")
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
+	responseData, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return errors.Wrap(err, "failed to read response body")
 	}
@@ -66,7 +65,7 @@ func (na *NetappAppliance) patchProtocolsS3(u interface{}) error {
 	if err != nil {
 		return errors.Wrap(err, "failed to send request to rest API")
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
+	responseData, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return errors.Wrap(err, "failed to read response body")
 	}
@@ -103,7 +102,7 @@ func (na *NetappAppliance) req(method string, path string, body interface{}) (*h
 		return nil, err
 	}
 	if resp.StatusCode >= 400 {
-		responseData, err := ioutil.ReadAll(resp.Body)
+		responseData, err := io.ReadAll(resp.Body)
 		na.Logger.Trace(string(responseData))
 		if err != nil {
 			return resp, errors.Wrap(err, "failed to read response body")

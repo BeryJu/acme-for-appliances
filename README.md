@@ -17,6 +17,8 @@ ACME for appliances that don't natively support it
 
   After the initial replacement, you might have to accept the new certificate in software that connects to the vCenter, like Veeam.
 
+- Synology DSM (tested with 7.2)
+
 Supported DNS Providers: https://go-acme.github.io/lego/dns/
 
 ## Running

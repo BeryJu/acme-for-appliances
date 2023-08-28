@@ -7,6 +7,7 @@ import (
 	"beryju.org/acme-for-appliances/internal/appliances"
 	"beryju.org/acme-for-appliances/internal/appliances/citrix_adc"
 	"beryju.org/acme-for-appliances/internal/appliances/netapp_ontap"
+	"beryju.org/acme-for-appliances/internal/appliances/synology_dsm"
 	"beryju.org/acme-for-appliances/internal/appliances/vmware_vsphere"
 )
 
@@ -22,6 +23,10 @@ func GetActual(a *appliances.Appliance) appliances.CertificateConsumer {
 		}
 	case "vmware_vcenter":
 		return &vmware_vsphere.VMwareVsphere{
+			Appliance: *a,
+		}
+	case "synology_dsm":
+		return &synology_dsm.SynologyDSM{
 			Appliance: *a,
 		}
 	default:
