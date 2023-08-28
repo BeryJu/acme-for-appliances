@@ -8,7 +8,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"path"
 
@@ -88,7 +88,7 @@ func LoadECDSA(path string) (crypto.PrivateKey, error) {
 		log.WithField("path", path).Debug("Failed to open file")
 		return GenerateECDSAKey(), err
 	}
-	contents, err := ioutil.ReadAll(f)
+	contents, err := io.ReadAll(f)
 	if err != nil {
 		log.WithField("path", path).Debug("Failed to read")
 		return GenerateECDSAKey(), err

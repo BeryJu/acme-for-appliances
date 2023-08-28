@@ -3,7 +3,7 @@ package vmware_vsphere
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 
@@ -40,7 +40,7 @@ func (v *VMwareVsphere) Consume(c *certificate.Resource) error {
 	if err != nil {
 		return vcenterErrorHandler(err)
 	}
-	responseData, err := ioutil.ReadAll(resp.Body)
+	responseData, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return vcenterErrorHandler(errors.Wrap(err, "failed to read response body"))
 	}

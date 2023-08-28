@@ -7,7 +7,7 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
-	"io/ioutil"
+	"io"
 	"os"
 	"path"
 
@@ -87,7 +87,7 @@ func LoadRSA(path string) (crypto.PrivateKey, error) {
 		log.WithField("path", path).Debug("Failed to open file")
 		return GenerateRSAKey(), err
 	}
-	contents, err := ioutil.ReadAll(f)
+	contents, err := io.ReadAll(f)
 	if err != nil {
 		log.WithField("path", path).Debug("Failed to read")
 		return GenerateRSAKey(), err
