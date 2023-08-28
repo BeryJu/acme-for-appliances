@@ -13,7 +13,7 @@ import (
 
 func GetActual(a *appliances.Appliance) appliances.CertificateConsumer {
 	switch strings.ToLower(a.Type) {
-	case "netapp":
+	case "netapp_ontap":
 		return &netapp_ontap.NetappAppliance{
 			Appliance: *a,
 		}

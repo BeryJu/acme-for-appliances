@@ -39,7 +39,7 @@ user_email = "jens@beryju.org"
 terms_agreed = false
 
 [appliances.my-appliance]
-type = "netapp"
+type = "netapp_ontap"
 domains = [
     "a.int.domain.tld"
 ]
