@@ -27,6 +27,9 @@ func (na *NetappAppliance) CheckExpiry() (int, error) {
 
 	// Actually check the certificates status
 	resp, err := na.req("GET", fmt.Sprintf("/api/security/certificates/%s", *activeCertUUID), nil)
+	if err != nil {
+		return -1, errors.Wrap(err, "failed to get certificates")
+	}
 	r := &ontapRecord{}
 	err = json.NewDecoder(resp.Body).Decode(&r)
 	if err != nil {
@@ -47,7 +50,7 @@ func (na *NetappAppliance) CheckExpiry() (int, error) {
 	if err != nil {
 		return 0, errors.Wrap(err, "Failed to parse expiry time")
 	}
-	d := t.Sub(time.Now())
+	d := time.Until(t)
 	return int(d.Hours() / 24), nil
 }
 

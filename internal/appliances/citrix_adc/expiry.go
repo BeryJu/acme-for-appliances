@@ -16,6 +16,9 @@ func (adc *CitrixADC) CheckExpiry() (int, error) {
 		return -1, nil
 	}
 	var cert ssl.Sslcertkey
-	mapstructure.Decode(certs[0], &cert)
+	err = mapstructure.Decode(certs[0], &cert)
+	if err != nil {
+		return 0, err
+	}
 	return cert.Daystoexpiration, nil
 }

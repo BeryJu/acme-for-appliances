@@ -7,7 +7,7 @@ import (
 	"os"
 	"path"
 
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 )
 
 type State struct {
@@ -29,28 +29,32 @@ func (s *State) CompareDomains(domains []string) bool {
 func (s *State) Write(base string, name string) {
 	data, err := json.MarshalIndent(s, "", " ")
 	if err != nil {
-		logrus.WithError(err).Warning("Failed to write state")
+		log.WithError(err).Warning("Failed to write state")
 		return
 	}
 	err = os.WriteFile(path.Join(PathPrefix(base), fmt.Sprintf("%s.json", name)), data, 0644)
 	if err != nil {
-		logrus.WithError(err).Warning("Failed to write state")
+		log.WithError(err).Warning("Failed to write state")
 	}
 }
 
 func GetState(base string, name string) *State {
 	jsonFile, err := os.Open(path.Join(PathPrefix(base), fmt.Sprintf("%s.json", name)))
 	if err != nil {
-		logrus.WithError(err).Warning("Failed to read state")
+		log.WithError(err).Warning("Failed to read state")
 		return &State{}
 	}
 	defer jsonFile.Close()
 	byteValue, err := io.ReadAll(jsonFile)
 	if err != nil {
-		logrus.WithError(err).Warning("Failed to read state")
+		log.WithError(err).Warning("Failed to read state")
 		return &State{}
 	}
 	var state State
-	json.Unmarshal(byteValue, &state)
+	err = json.Unmarshal(byteValue, &state)
+	if err != nil {
+		log.WithError(err).Warning("failed to parse state")
+		return &State{}
+	}
 	return &state
 }

@@ -30,6 +30,6 @@ func (v *VMwareVsphere) CheckExpiry() (int, error) { // Create request body
 	if err != nil {
 		return 0, errors.Wrap(err, "Failed to parse expiry time")
 	}
-	d := t.Sub(time.Now())
+	d := time.Until(t)
 	return int(d.Hours() / 24), nil
 }
