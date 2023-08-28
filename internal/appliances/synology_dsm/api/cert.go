@@ -44,28 +44,29 @@ func (dsm *SynologyAPI) UploadCertificate(existing *SynologyAPICert, cert, inter
 		"api":     string(SynoAPICoreCert),
 		"version": "1",
 		"method":  "import",
+		"desc":    existing.Desc,
 	}
-	if existing != nil {
+	if existing.ID != "" {
 		params["id"] = existing.ID
-		params["desc"] = existing.Desc
 	}
-	req, err := dsm.makeFileRequest(http.MethodPost, "webapi/entry.cgi", params,
-		APIFile{
-			Name: "key",
-			Type: "application/x-iwork-keynote-sffkey",
-			Data: key,
+	files := []APIFile{
+		{
+			Field: "key",
+			Data:  key,
 		},
-		APIFile{
-			Name: "inter_cert",
-			Type: "application/pkix-cert",
-			Data: intermediate,
+		{
+			Field: "cert",
+			Data:  cert,
 		},
-		APIFile{
-			Name: "cert",
-			Type: "application/pkix-cert",
-			Data: cert,
-		},
-	)
+	}
+	if len(intermediate) != 0 {
+		files = append(files, APIFile{
+			Field: "inter_cert",
+			Data:  intermediate,
+		})
+	}
+
+	req, err := dsm.makeFileRequest(http.MethodPost, "webapi/entry.cgi", params, files...)
 	if err != nil {
 		return nil, err
 	}

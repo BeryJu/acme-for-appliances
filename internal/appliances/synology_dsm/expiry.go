@@ -11,7 +11,7 @@ func (dsm *SynologyDSM) CheckExpiry() (int, error) {
 	}
 	for _, cert := range certs.Data.Certificates {
 		dsm.Logger.WithField("cert", cert.Desc).Trace(cert.ValidTill.Human())
-		if cert.Desc != dsm.Extension["cert_desc"] {
+		if cert.Desc != dsm.Extension["cert_desc"].(string) {
 			continue
 		}
 		t := time.Until(time.Time(cert.ValidTill))
@@ -19,5 +19,5 @@ func (dsm *SynologyDSM) CheckExpiry() (int, error) {
 		return int(t.Hours()) / 24, nil
 	}
 	dsm.Logger.Info("Cert not found")
-	return 0, nil
+	return -1, nil
 }

@@ -50,9 +50,9 @@ func (dsm *SynologyAPI) makeRequest(method string, path string, params map[strin
 
 // APIFile is a struct which contains a file's name, its type and its data.
 type APIFile struct {
-	Name string
-	Type string
-	Data []byte
+	Name  string
+	Field string
+	Data  []byte
 }
 
 func (dsm *SynologyAPI) makeFileRequest(method string, path string, params map[string]string, files ...APIFile) (*http.Request, error) {
@@ -62,7 +62,7 @@ func (dsm *SynologyAPI) makeFileRequest(method string, path string, params map[s
 	)
 
 	for _, f := range files {
-		part, err := w.CreateFormFile(f.Type, filepath.Base(f.Name))
+		part, err := w.CreateFormFile(f.Field, filepath.Base(f.Name))
 		if err != nil {
 			return nil, err
 		}
