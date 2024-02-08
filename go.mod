@@ -4,7 +4,7 @@ go 1.20
 
 require (
 	github.com/chiradeep/go-nitro v0.0.0-20201217095705-33aeab85c408
-	github.com/getsentry/sentry-go v0.26.0
+	github.com/getsentry/sentry-go v0.27.0
 	github.com/go-acme/lego/v4 v4.15.0
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/pkg/errors v0.9.1
