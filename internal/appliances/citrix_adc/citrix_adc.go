@@ -6,10 +6,12 @@ import (
 	"github.com/pkg/errors"
 )
 
-const ADCConfigFilenameCert = "filename_cert"
-const ADCConfigFilenameKey = "filename_key"
-const ADCConfigPathSSL = "path_ssl"
-const ADCConfigCertName = "cert_name"
+const (
+	ADCConfigFilenameCert = "filename_cert"
+	ADCConfigFilenameKey  = "filename_key"
+	ADCConfigPathSSL      = "path_ssl"
+	ADCConfigCertName     = "cert_name"
+)
 
 type CitrixADC struct {
 	appliances.Appliance

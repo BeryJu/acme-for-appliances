@@ -32,7 +32,7 @@ func (s *State) Write(base string, name string) {
 		log.WithError(err).Warning("Failed to write state")
 		return
 	}
-	err = os.WriteFile(path.Join(PathPrefix(base), fmt.Sprintf("%s.json", name)), data, 0644)
+	err = os.WriteFile(path.Join(PathPrefix(base), fmt.Sprintf("%s.json", name)), data, 0o644)
 	if err != nil {
 		log.WithError(err).Warning("Failed to write state")
 	}

@@ -14,11 +14,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var cfgFile string
-var force bool
-var infinite bool
-var checkInterval int
-var Version string
+var (
+	cfgFile       string
+	force         bool
+	infinite      bool
+	checkInterval int
+	Version       string
+)
 
 // rootCmd represents the base command when called without any subcommands
 var rootCmd = &cobra.Command{

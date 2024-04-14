@@ -60,7 +60,7 @@ func GenerateRSAKey() *rsa.PrivateKey {
 
 func GenerateKeyAndSaveRSA(path string) (crypto.PrivateKey, error) {
 	key := GenerateRSAKey()
-	f, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0755)
+	f, err := os.OpenFile(path, os.O_CREATE|os.O_RDWR, 0o755)
 	if err != nil {
 		log.WithField("path", path).Warning("failed to open file")
 		return key, err

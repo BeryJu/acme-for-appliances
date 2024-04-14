@@ -8,9 +8,11 @@ import (
 	"github.com/pkg/errors"
 )
 
-const NetappConfigCertNameA = "cert_name_a"
-const NetappConfigCertNameB = "cert_name_b"
-const NetappConfigSVMName = "svm_name"
+const (
+	NetappConfigCertNameA = "cert_name_a"
+	NetappConfigCertNameB = "cert_name_b"
+	NetappConfigSVMName   = "svm_name"
+)
 
 // NetappDateLayout Parse time from response
 // example: "2021-04-20T15:59:37+00:00"
