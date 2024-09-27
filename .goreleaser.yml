@@ -39,8 +39,7 @@ checksum:
   name_template: '{{ .ProjectName }}_{{ .Version }}_SHA256SUMS'
   algorithm: sha256
 release:
-  # If you want to manually examine the release before its live, uncomment this line:
-  # draft: true
+  prerelease: auto
 changelog:
   skip: true
 dockers:
@@ -75,4 +74,4 @@ brews:
       email: goreleaser@beryju.org
     homepage: 'https://github.com/beryju/acme-for-appliances'
     description: ACME Support for appliances that don't natively support it
-    folder: Formula
+    directory: Formula
