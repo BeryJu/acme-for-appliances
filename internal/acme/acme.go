@@ -57,6 +57,7 @@ func (c *Client) GetCerts(app appliances.CertificateConsumer) (*certificate.Reso
 
 	opts := []dns01.ChallengeOption{
 		dns01.AddDNSTimeout(20 * time.Second),
+		dns01.DisableAuthoritativeNssPropagationRequirement(),
 	}
 
 	if len(config.C.ACME.Resolvers) > 0 {
