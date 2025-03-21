@@ -1,12 +1,12 @@
 package vmware_vsphere
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/pkg/errors"
-	"gopkg.in/square/go-jose.v2/json"
 )
 
 func (v *VMwareVsphere) CheckExpiry() (int, error) { // Create request body

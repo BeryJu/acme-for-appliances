@@ -2,6 +2,7 @@ package vmware_vsphere
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -10,7 +11,6 @@ import (
 	"beryju.io/acme-for-appliances/internal/appliances"
 	"github.com/go-acme/lego/v4/certificate"
 	"github.com/pkg/errors"
-	"gopkg.in/square/go-jose.v2/json"
 )
 
 func (v *VMwareVsphere) Consume(c *certificate.Resource) error {

@@ -1,6 +1,7 @@
 package vmware_vsphere
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"time"
@@ -8,7 +9,6 @@ import (
 	"beryju.io/acme-for-appliances/internal/appliances"
 	"beryju.io/acme-for-appliances/internal/config"
 	"beryju.io/acme-for-appliances/internal/keys"
-	"gopkg.in/square/go-jose.v2/json"
 )
 
 const VMwareVsphereSessionHeader = "vmware-api-session-id"
