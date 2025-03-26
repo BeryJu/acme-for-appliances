@@ -65,7 +65,7 @@ password = "admin"
 # [appliances.my-appliance.extension]
 # Root CA of the ACME service you use.
 # vCenter requires this explicitly stated.
-# In the case of Let's Encrypt, this is will be https://www.identrust.com/dst-root-ca-x3
+# In the case of Let's Encrypt, this is will be https://letsencrypt.org/certificates/
 # root_ca = """
 # """
 

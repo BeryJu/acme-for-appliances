@@ -44,7 +44,12 @@ func GetState(base string, name string) *State {
 		log.WithError(err).Warning("Failed to read state")
 		return &State{}
 	}
-	defer jsonFile.Close()
+	defer func() {
+		err := jsonFile.Close()
+		if err != nil {
+			log.WithError(err).Warning("failed to close state")
+		}
+	}()
 	byteValue, err := io.ReadAll(jsonFile)
 	if err != nil {
 		log.WithError(err).Warning("Failed to read state")
