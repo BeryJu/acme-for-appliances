@@ -1,5 +1,4 @@
-# Visit https://goreleaser.com for documentation on how to customize this
-# behavior.
+version: 2
 before:
   hooks:
     # this is just an example and not a requirement for provider building/publishing
@@ -30,18 +29,16 @@ builds:
   binary: '{{ .ProjectName }}'
 archives:
 - id: raw
-  format: binary
+  formats: binary
   name_template: '{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}'
 - id: tar
-  format: tar.gz
+  formats: tar.gz
   name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}'
 checksum:
   name_template: '{{ .ProjectName }}_{{ .Version }}_SHA256SUMS'
   algorithm: sha256
 release:
   prerelease: auto
-changelog:
-  skip: true
 dockers:
 - image_templates: ["ghcr.io/beryju/{{ .ProjectName }}:{{ .Version }}-amd64"]
   dockerfile: Dockerfile
@@ -63,15 +60,20 @@ docker_manifests:
   image_templates:
   - ghcr.io/beryju/{{ .ProjectName }}:{{ .Version }}-amd64
   - ghcr.io/beryju/{{ .ProjectName }}:{{ .Version }}-arm64v8
-brews:
-  - ids:
-      - raw
-    repository:
-      owner: beryju
-      name: homebrew-tap
-    commit_author:
-      name: goreleaserbot
-      email: goreleaser@beryju.org
-    homepage: 'https://github.com/beryju/acme-for-appliances'
-    description: ACME Support for appliances that don't natively support it
-    directory: Formula
+homebrew_casks:
+- ids:
+    - raw
+  commit_author:
+    name: goreleaserbot
+    email: goreleaser@beryju.org
+  repository:
+    owner: beryju
+    name: homebrew-tap
+  homepage: 'https://github.com/beryju/{{ .ProjectName }}'
+  description: ACME Support for appliances that don't natively support it
+  hooks:
+    post:
+      install: |
+        if system_command("/usr/bin/xattr", args: ["-h"]).exit_status == 0
+          system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/{{ .ProjectName }}"]
+        end
