@@ -62,16 +62,14 @@ docker_manifests:
       - ghcr.io/beryju/{{ .ProjectName }}:{{ .Version }}-amd64
       - ghcr.io/beryju/{{ .ProjectName }}:{{ .Version }}-arm64v8
 homebrew_casks:
-  - ids:
-      - raw
-    binary: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+  - name: "{{ .ProjectName }}"
     commit_author:
       name: goreleaserbot
       email: goreleaser@beryju.org
     repository:
       owner: beryju
       name: homebrew-tap
-    homepage: "https://github.com/beryju/{{ .ProjectName }}"
+    homepage: "https://github.com/BeryJu/{{ .ProjectName }}"
     description: ACME Support for appliances that don't natively support it
     hooks:
       post:
