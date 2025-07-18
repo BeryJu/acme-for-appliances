@@ -63,6 +63,8 @@ docker_manifests:
       - ghcr.io/beryju/{{ .ProjectName }}:{{ .Version }}-arm64v8
 homebrew_casks:
   - name: "{{ .ProjectName }}"
+    ids:
+      - tar
     commit_author:
       name: goreleaserbot
       email: goreleaser@beryju.org
