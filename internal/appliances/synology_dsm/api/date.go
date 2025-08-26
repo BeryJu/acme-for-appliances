@@ -9,7 +9,7 @@ import (
 type SynologyDate time.Time
 
 // For example, "Nov 10 11:48:04 2023 GMT"
-const SynologyDateLayout = "Jan 02 15:04:05 2006 MST"
+const SynologyDateLayout = "Jan 2 15:04:05 2006 MST"
 
 // Implement Marshaler and Unmarshaler interface
 func (sd *SynologyDate) UnmarshalJSON(b []byte) error {
