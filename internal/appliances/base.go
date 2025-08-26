@@ -9,6 +9,7 @@ import (
 
 	"beryju.io/acme-for-appliances/internal/keys"
 	"github.com/go-acme/lego/v4/certificate"
+	"github.com/go-acme/lego/v4/lego"
 	log "github.com/sirupsen/logrus"
 )
 
@@ -77,6 +78,15 @@ func (a *Appliance) GetKeyGenerator(storageBase string) keys.KeyGenerator {
 	return keys.NewECDSAKeyGenerator(storageBase)
 }
 
+func (a *Appliance) Obtain(c *lego.Client, storage string) (*certificate.Resource, error) {
+	pk := a.GetKeyGenerator(storage).GetPrivateKey(a.GetName())
+	return c.Certificate.Obtain(certificate.ObtainRequest{
+		Domains:    a.GetDomains(),
+		Bundle:     false,
+		PrivateKey: pk,
+	})
+}
+
 type CertificateConsumer interface {
 	Init() error
 	CheckExpiry() (int, error)
@@ -84,4 +94,5 @@ type CertificateConsumer interface {
 	GetName() string
 	GetDomains() []string
 	GetKeyGenerator(storageBase string) keys.KeyGenerator
+	Obtain(client *lego.Client, storage string) (*certificate.Resource, error)
 }

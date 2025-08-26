@@ -70,11 +70,5 @@ func (c *Client) GetCerts(app appliances.CertificateConsumer) (*certificate.Reso
 		log.Fatal(err)
 	}
 
-	pk := app.GetKeyGenerator(config.C.Storage).GetPrivateKey(app.GetName())
-	request := certificate.ObtainRequest{
-		Domains:    app.GetDomains(),
-		Bundle:     false,
-		PrivateKey: pk,
-	}
-	return c.Certificate.Obtain(request)
+	return app.Obtain(c.Client, config.C.Storage)
 }
