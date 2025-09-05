@@ -9,7 +9,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       - run: git fetch --prune --unshallow
-      - uses: actions/setup-go@v5
+      - uses: actions/setup-go@v6
         with:
           go-version-file: go.mod
           cache: true
