@@ -3,6 +3,7 @@ package netapp_ontap
 import (
 	"encoding/json"
 	"fmt"
+	"os"
 	"time"
 
 	"beryju.io/acme-for-appliances/internal/appliances"
@@ -85,6 +86,18 @@ func (na *NetappAppliance) CreateCert(c *certificate.Resource) (*ontapRecord, er
 		PublicCertificate: appliances.MainCertOnly(c),
 		PrivateKey:        string(c.PrivateKey),
 		Type:              "server",
+	}
+
+	// Check if we need to add a certificate chain
+	if ca_chain, ok := na.Extension[NetappConfigCAChain].([]any); ok && len(ca_chain) > 0 {
+		for i, cert := range ca_chain {
+			na.Logger.WithField("index", i).Debug("Adding CA cert to chain")
+			cert_pem, err := os.ReadFile(cert.(string))
+			if err != nil {
+				return nil, errors.Wrapf(err, "failed to read CA cert file %s", cert)
+			}
+			r.IntermediateCertificates = append(r.IntermediateCertificates, string(cert_pem))
+		}
 	}
 
 	na.Logger.Info("Creating new certificate object")

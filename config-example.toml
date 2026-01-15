@@ -48,8 +48,10 @@ password = "admin"
 # cert_name_a = "test-le-cert-a"
 # cert_name_b = "test-le-cert-b"
 # SVM for which the Certificate is created. Can be set to the cluster name
-# for a cluster certificate
+# for a cluster certificate (case sensitive)
 # svm_name = "cert-test"
+# Optional certificate chain to be added when creating cetificate in ONTAP
+# ca_chain = [ "int.pem", "ca.pem" ]
 
 # ----- Citrix ADC Extension of Appliance block
 # [appliances.my-appliance.extension]
