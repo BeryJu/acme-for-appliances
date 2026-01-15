@@ -51,6 +51,7 @@ password = "admin"
 # for a cluster certificate (case sensitive)
 # svm_name = "cert-test"
 # Optional certificate chain to be added when creating cetificate in ONTAP
+# In the case of Let's Encrypt, this is will be https://letsencrypt.org/certificates/
 # ca_chain = [ "int.pem", "ca.pem" ]
 
 # ----- Citrix ADC Extension of Appliance block
