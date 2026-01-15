@@ -12,6 +12,7 @@ const (
 	NetappConfigCertNameA = "cert_name_a"
 	NetappConfigCertNameB = "cert_name_b"
 	NetappConfigSVMName   = "svm_name"
+	NetappConfigCAChain   = "ca_chain"
 )
 
 // NetappDateLayout Parse time from response
