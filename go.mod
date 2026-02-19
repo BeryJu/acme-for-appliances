@@ -1,8 +1,6 @@
 module beryju.io/acme-for-appliances
 
-go 1.24.0
-
-toolchain go1.24.1
+go 1.24.13
 
 require (
 	github.com/chiradeep/go-nitro v0.0.0-20201217095705-33aeab85c408
@@ -13,7 +11,7 @@ require (
 	github.com/sirupsen/logrus v1.9.4
 	github.com/spf13/cobra v1.10.2
 	github.com/spf13/viper v1.21.0
-	github.com/vmware/govmomi v0.52.0
+	github.com/vmware/govmomi v0.53.0
 	golang.org/x/crypto v0.48.0
 )
 
