@@ -1654,8 +1654,8 @@ github.com/ultradns/ultradns-go-sdk v1.8.1-20250722213956-faef419/go.mod h1:QN0/
 github.com/urfave/cli/v2 v2.3.0/go.mod h1:LJmUH05zAU44vOAcrfzZQKsZbVcdbOG8rtL3/XcUArI=
 github.com/vinyldns/go-vinyldns v0.9.17 h1:hfPZfCaxcRBX6Gsgl42rLCeoal58/BH8kkvJShzjjdI=
 github.com/vinyldns/go-vinyldns v0.9.17/go.mod h1:pwWhE9K/leGDOIduVhRGvQ3ecVMHWRfEnKYUTEU3gB4=
-github.com/vmware/govmomi v0.53.1 h1:6cNudrmbkYTp2onqSLTIsPwP2zj6Fkfb4ymNn7GO5dk=
-github.com/vmware/govmomi v0.53.1/go.mod h1:EWfuzPfxT5NV+aS2we02SLFdhvJkgeY7t7+TszgBSMY=
+github.com/vmware/govmomi v0.54.0 h1:akEKkM9XKMOhTskmdzTLG8JzH+sh61jbFrVPbAzv5IQ=
+github.com/vmware/govmomi v0.54.0/go.mod h1:0F3hChqXDrSQQnjfSiCqRE5lPD4aZlbOtKG4uroq2a4=
 github.com/volcengine/volc-sdk-golang v1.0.242 h1:YEnYLl8mn83JCdO/X5GRDvxfxGvpUqk5j0Mj4VhwM6Y=
 github.com/volcengine/volc-sdk-golang v1.0.242/go.mod h1:zHJlaqiMbIB+0mcrsZPTwOb3FB7S/0MCfqlnO8R7hlM=
 github.com/vultr/govultr/v3 v3.31.0 h1:xSRqIQEnB3tjgpIOADWQOhOedDsqZj9qawW+mAoq7/8=
